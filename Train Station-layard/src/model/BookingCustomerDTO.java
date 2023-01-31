@@ -14,7 +14,7 @@ public class BookingCustomerDTO {
     private String seatNo;
     private String trainClass;
     private String price;
-    private Date Date;
+    private String  date;
 
     public BookingCustomerDTO(){}
 
@@ -30,22 +30,7 @@ public class BookingCustomerDTO {
         this.seatNo = (String)cmbCusSeatNoValue;
         this.trainClass =(String) cmbCusClassValue;
         this.price = txtCusPriceText;
-        //this.date=DatxtCusBookDateText;
-    }
-
-    public BookingCustomerDTO(String text, String txtCusNameText, String txtCusAddressText, String txtCusContactText, Object value, Object cmbCusToValue, String txtTrainTimeText, Object cmbCusTrainValue, Object cmbCusSeatNoValue, Object cmbCusClassValue, String txtCusPriceText, Date date) {
-        this.id = text;
-        this.name = txtCusNameText;
-        this.address = txtCusAddressText;
-        this.contact = txtCusContactText;
-        this.trainFrom = (String) value;
-        this.trainTo = (String)cmbCusToValue;
-        this.time = txtTrainTimeText;
-        this.train =(String) cmbCusTrainValue;
-        this.seatNo = (String)cmbCusSeatNoValue;
-        this.trainClass =(String) cmbCusClassValue;
-        this.price = txtCusPriceText;
-        this.Date=date;
+        this.date=txtCusBookDateText;
     }
 
     public String getId() {
@@ -136,12 +121,12 @@ public class BookingCustomerDTO {
         this.price = price;
     }
 
-    public Date getDate() {
-        return Date;
+    public String getDate() {
+        return date;
     }
 
-    public void setDate(Date date) {
-        this.Date = date;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override
@@ -158,7 +143,7 @@ public class BookingCustomerDTO {
                 ", seatNo='" + seatNo + '\'' +
                 ", trainClass='" + trainClass + '\'' +
                 ", price='" + price + '\'' +
-                ", Date=" + Date +
+                ", Date=" + date +
                 '}';
     }
 }

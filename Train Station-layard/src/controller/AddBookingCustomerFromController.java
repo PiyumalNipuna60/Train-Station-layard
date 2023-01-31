@@ -249,7 +249,8 @@ public class AddBookingCustomerFromController {
                 cmbCusTrain.setValue(search.getTrain());
                 cmbCusSeatNo.setValue(search.getSeatNo());
                 cmbCusClass.setValue(search.getTrainClass());
-                txtCusBookDate.setText(String.valueOf(search.getDate()));
+                txtCusBookDate.setText(search.getDate());
+                System.out.println(search.getDate());
             }else {
                 new Alert(Alert.AlertType.ERROR,"Empty Result..!").show();
             }
