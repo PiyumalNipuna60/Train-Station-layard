@@ -1,4 +1,5 @@
-package dao.custom;
+package dao;
 
 public class BookingCustomerDAOImpl {
+
 }
