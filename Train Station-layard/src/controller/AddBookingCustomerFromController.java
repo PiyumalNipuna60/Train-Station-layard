@@ -1,5 +1,7 @@
 package controller;
 
+import dao.BookingCustomerDAO;
+import dao.BookingCustomerDAOImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import model.BookingCustomerDTO;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -149,30 +152,29 @@ public class AddBookingCustomerFromController {
         String trainClass = (String) cmbCusClass.getValue();
         String price = txtCusPrice.getText();
 
-        HashMap map=new HashMap();
+        HashMap map = new HashMap();
 
-        map.put("id",customerID);
-        map.put("name",customerName);
-        map.put("address",customerAddress);
-        map.put("contact",customerContact);
-        map.put("trainFrom",trainFrom);
-        map.put("trainTo",trainTo);
-        map.put("time",time);
-        map.put("train",train);
-        map.put("seatNo",seatNo);
-        map.put("trainClass",trainClass);
-        map.put("price",price);
+        map.put("id", customerID);
+        map.put("name", customerName);
+        map.put("address", customerAddress);
+        map.put("contact", customerContact);
+        map.put("trainFrom", trainFrom);
+        map.put("trainTo", trainTo);
+        map.put("time", time);
+        map.put("train", train);
+        map.put("seatNo", seatNo);
+        map.put("trainClass", trainClass);
+        map.put("price", price);
 
         try {
-            JasperDesign load= JRXmlLoader.load(this.getClass().getResourceAsStream("/views/reports/BookingReport.jrxml")) ;
+            JasperDesign load = JRXmlLoader.load(this.getClass().getResourceAsStream("/views/reports/BookingReport.jrxml"));
             JasperReport compileReport = JasperCompileManager.compileReport(load);
-          //  JasperReport compileReport= (JasperReport) JRLoader.loadObject(this.getClass().getResource("/view/reports/BookingReport.jasper"));
-            JasperPrint jasperPrint= JasperFillManager.fillReport(compileReport,map, new JREmptyDataSource(1));
-            JasperViewer.viewReport(jasperPrint,false);
+            //  JasperReport compileReport= (JasperReport) JRLoader.loadObject(this.getClass().getResource("/view/reports/BookingReport.jasper"));
+            JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, map, new JREmptyDataSource(1));
+            JasperViewer.viewReport(jasperPrint, false);
 
 
-
-        }catch (JRException e){
+        } catch (JRException e) {
             e.printStackTrace();
         }
     }
@@ -230,8 +232,32 @@ public class AddBookingCustomerFromController {
         txtCusBookDate.clear();
     }
 
-    //#############serch vada na
     public void txtSearchOnAction(ActionEvent actionEvent) {
+
+        try {
+            BookingCustomerDAO bookingCustomerDAO = new BookingCustomerDAOImpl();
+            BookingCustomerDTO search = bookingCustomerDAO.search(txtCusId.getText());
+            if (search != null) {
+                txtCusId.setText(search.getId());
+                txtCusName.setText(search.getName());
+                txtCusAddress.setText(search.getAddress());
+                txtCusContact.setText(search.getContact());
+                txtTrainTime.setText(search.getTime());
+                txtCusPrice.setText(search.getPrice());
+                cmbCusFrom.setValue(search.getTrainFrom());
+                cmbCusTo.setValue(search.getTrainTo());
+                cmbCusTrain.setValue(search.getTrain());
+                cmbCusSeatNo.setValue(search.getSeatNo());
+                cmbCusClass.setValue(search.getTrainClass());
+                txtCusBookDate.setText(String.valueOf(search.getDate()));
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Empty Result..!").show();
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
 //            try {
 //                String sql = "SELECT * FROM booking WHERE id=?";
 //                PreparedStatement sta = DBConnection.getInstance().getConnection().prepareStatement(sql);
