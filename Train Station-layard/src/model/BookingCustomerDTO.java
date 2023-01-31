@@ -2,7 +2,7 @@ package model;
 
 import java.util.Date;
 
-public class BookingCustomer {
+public class BookingCustomerDTO {
     private String id;
     private String name;
     private String address;
@@ -16,9 +16,9 @@ public class BookingCustomer {
     private String price;
     private Date Date;
 
-    public BookingCustomer(){}
+    public BookingCustomerDTO(){}
 
-    public BookingCustomer(String text, String txtCusNameText, String txtCusAddressText, String txtCusContactText, Object value, Object cmbCusToValue, String txtTrainTimeText, Object cmbCusTrainValue, Object cmbCusSeatNoValue, Object cmbCusClassValue, String txtCusPriceText, String txtCusBookDateText) {
+    public BookingCustomerDTO(String text, String txtCusNameText, String txtCusAddressText, String txtCusContactText, Object value, Object cmbCusToValue, String txtTrainTimeText, Object cmbCusTrainValue, Object cmbCusSeatNoValue, Object cmbCusClassValue, String txtCusPriceText, String txtCusBookDateText) {
         this.id = text;
         this.name = txtCusNameText;
         this.address = txtCusAddressText;
@@ -33,7 +33,7 @@ public class BookingCustomer {
         //this.date=DatxtCusBookDateText;
     }
 
-    public BookingCustomer(String text, String txtCusNameText, String txtCusAddressText, String txtCusContactText, Object value, Object cmbCusToValue, String txtTrainTimeText, Object cmbCusTrainValue, Object cmbCusSeatNoValue, Object cmbCusClassValue, String txtCusPriceText, Date date) {
+    public BookingCustomerDTO(String text, String txtCusNameText, String txtCusAddressText, String txtCusContactText, Object value, Object cmbCusToValue, String txtTrainTimeText, Object cmbCusTrainValue, Object cmbCusSeatNoValue, Object cmbCusClassValue, String txtCusPriceText, Date date) {
         this.id = text;
         this.name = txtCusNameText;
         this.address = txtCusAddressText;

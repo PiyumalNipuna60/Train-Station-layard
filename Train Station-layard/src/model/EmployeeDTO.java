@@ -1,6 +1,6 @@
 package model;
 
-public class Employee {
+public class EmployeeDTO {
     private String id;
     private String name;
     private String address;
@@ -8,10 +8,10 @@ public class Employee {
     private String contact;
     private String salary;
 
-    public Employee() {
+    public EmployeeDTO() {
     }
 
-    public Employee(String id, String name, String address, String age, String contact, String salary) {
+    public EmployeeDTO(String id, String name, String address, String age, String contact, String salary) {
         this.setId(id);
         this.setName(name);
         this.setAddress(address);

@@ -1,6 +1,6 @@
 package model;
 
-public class Train {
+public class TrainDTO {
     private String trainId;
     private String trainName;
     private String startTime;
@@ -9,9 +9,9 @@ public class Train {
     private String trainTo;
 
 
-    public Train() { }
+    public TrainDTO() { }
 
-    public Train(String trainId, String trainName, String startTime, String endTime, String trainTo, String trainFrom) {
+    public TrainDTO(String trainId, String trainName, String startTime, String endTime, String trainTo, String trainFrom) {
         this.trainId = trainId;
         this.trainName = trainName;
         this.startTime = startTime;
@@ -20,7 +20,7 @@ public class Train {
         this.trainFrom = trainFrom;
     }
 
-    public Train(String trainId, String trainName, String startTime, String endTime, Object trainFrom, Object trainto) {
+    public TrainDTO(String trainId, String trainName, String startTime, String endTime, Object trainFrom, Object trainto) {
         this.trainId = trainId;
         this.trainName = trainName;
         this.startTime = startTime;

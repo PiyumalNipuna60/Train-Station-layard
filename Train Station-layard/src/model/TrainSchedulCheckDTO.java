@@ -1,6 +1,6 @@
 package model;
 
-public class TrainSchedulCheck {
+public class TrainSchedulCheckDTO {
     private String From;
     private String To;
     private String TrainId;
@@ -11,10 +11,10 @@ public class TrainSchedulCheck {
     private String TrainStartStation;
     private String TrainEndStation;
 
-    public TrainSchedulCheck() {
+    public TrainSchedulCheckDTO() {
     }
 
-    public TrainSchedulCheck(String from, String to, String trainId, String trainName, String startTrainTime, String endStationTime, String trainStopTime, String trainStartStation, String trainEndStation) {
+    public TrainSchedulCheckDTO(String from, String to, String trainId, String trainName, String startTrainTime, String endStationTime, String trainStopTime, String trainStartStation, String trainEndStation) {
         setFrom(from);
         setTo(to);
         setTrainId(trainId);
