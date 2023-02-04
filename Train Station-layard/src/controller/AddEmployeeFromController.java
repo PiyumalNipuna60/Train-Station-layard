@@ -36,6 +36,8 @@ public class AddEmployeeFromController {
     public TableColumn colEmpSalary;
     LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
 
+
+
     public void initialize() {
         btnAddEmployee.setDisable(true);
 
