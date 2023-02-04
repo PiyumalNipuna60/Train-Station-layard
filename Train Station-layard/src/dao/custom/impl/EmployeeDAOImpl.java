@@ -23,7 +23,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                             resultSet.getString(5),
                             resultSet.getString(6)
                     ));
-            System.out.println(AllEmployee);
         }
         return AllEmployee;
     }
@@ -45,7 +44,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public EmployeeDTO search(String s) throws SQLException, ClassNotFoundException {
-        return null;
     }
 
     @Override

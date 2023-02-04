@@ -1,11 +1,14 @@
 package controller;
 
+import dao.custom.EmployeeDAO;
+import dao.custom.impl.EmployeeDAOImpl;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import model.EmployeeDTO;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -13,6 +16,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.regex.Pattern;
@@ -36,6 +40,7 @@ public class AddEmployeeFromController {
     public TableColumn colEmpSalary;
     LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
 
+    private final EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
 
     public void initialize() {
@@ -62,15 +67,23 @@ public class AddEmployeeFromController {
         colEmpTel.setCellValueFactory(new PropertyValueFactory("contact"));
         colEmpSalary.setCellValueFactory(new PropertyValueFactory("salary"));
 
-        try {
             loadAllEmployee();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
-    private void loadAllEmployee() throws ClassNotFoundException, SQLException {
-
+    private void loadAllEmployee() {
+        tblEmployee.getItems().clear();
+        //========================
+        try {
+            ArrayList<EmployeeDTO>  all = employeeDAO.getAll();
+            for (EmployeeDTO employee :all) {
+               tblEmployee.getItems().add(
+                       new EmployeeDTO(employee.getId(),employee.getName(),employee.getAddress(),employee.getAge(),
+                               employee.getContact(),employee.getSalary()));
+            }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 
