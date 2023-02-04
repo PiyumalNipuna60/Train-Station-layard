@@ -136,7 +136,20 @@ public class AddEmployeeFromController {
     }
 
     public void SearchOnAction(ActionEvent actionEvent) {
-
+        try {
+            EmployeeDTO search = employeeDAO.search(txtEmpId.getText());
+            if (search!=null){
+                txtEmpName.setText(search.getName());
+                txtEmpAddress.setText(search.getAddress());
+                txtEmpAge.setText(search.getAge());
+                txtEmpTel.setText(search.getContact());
+                txtEmpSalary.setText(search.getSalary());
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Empty Result..!").show();
+            }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void btnEmployeeReportOnAction(ActionEvent actionEvent) {
