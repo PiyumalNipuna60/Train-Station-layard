@@ -32,7 +32,18 @@ public class BookingCustomerDAOImpl implements BookingCustomerDAO{
 
     @Override
     public boolean Save(BookingCustomerDTO dto) throws SQLException, ClassNotFoundException {
-        return false;
+        return SqlUtil.executeUpdate("insert into booking values(?,?,?,?,?,?,?,?,?,?,?,?)", dto.getId(),
+                dto.getName(),
+                dto.getAddress(),
+                dto.getContact(),
+                dto.getTrainFrom(),
+                dto.getTrainTo(),
+                dto.getTime(),
+                dto.getTrain(),
+                dto.getSeatNo(),
+                dto.getTrainClass(),
+                dto.getPrice(),
+                dto.getDate());
     }
 
     @Override
@@ -69,7 +80,10 @@ public class BookingCustomerDAOImpl implements BookingCustomerDAO{
 
     @Override
     public boolean exist(String s) throws SQLException, ClassNotFoundException {
-        return false;
+       // return SqlUtil.executeUpdate("Select * from booking WHERE id=?", s);
+
+        ResultSet rst = SqlUtil.executeQuery("SELECT id FROM booking WHERE id=?", s);
+        return rst.next();
     }
 
     @Override

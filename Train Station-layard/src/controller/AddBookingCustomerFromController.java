@@ -84,10 +84,10 @@ public class AddBookingCustomerFromController {
         colDate.setCellValueFactory(new PropertyValueFactory("date"));
 
 
-            loadAllBooking();
+        loadAllBooking();
     }
 
-    public void textFields_Key_Releaseed(KeyEvent keyEvent) {
+    public void textFields_Key_Releaseed(KeyEvent keyEvent) throws SQLException, ClassNotFoundException {
         validate();
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
@@ -97,9 +97,13 @@ public class AddBookingCustomerFromController {
                 TextField textField = (TextField) responds;
                 textField.requestFocus();
             } else {
+               //========================
+                boolean exist = bookingCustomerDAO.exist(txtCusId.getText());
+                if (exist) {
 
-                btnBookingOnAction();
-
+                } else {
+                    btnBookingOnAction();
+                }
             }
         }
     }
@@ -130,7 +134,38 @@ public class AddBookingCustomerFromController {
 
 
     public void btnBookingOnAction() {
+        try {
+            //========================
+            String customerID = txtCusId.getText();
+            String customerName = txtCusName.getText();
+            String customerAddress = txtCusAddress.getText();
+            String customerContact = txtCusContact.getText();
+            Object trainFrom = cmbCusFrom.getValue();
+            Object trainTo = cmbCusTo.getValue();
+            String time = txtTrainTime.getText();
+            Object train = cmbCusTrain.getValue();
+            Object seatNo = cmbCusSeatNo.getValue();
+            Object trainClass = cmbCusClass.getValue();
+            String price = txtCusPrice.getText();
+            String date = txtCusBookDate.getText();
 
+            boolean exist = bookingCustomerDAO.exist(customerID);
+            if (exist) {
+                new Alert(Alert.AlertType.ERROR, "All Ready Add ID!").show();
+            } else {
+                btnBooking.setVisible(true);
+                boolean save = bookingCustomerDAO.Save(new BookingCustomerDTO(customerID, customerName, customerAddress,
+                        customerContact, trainFrom, trainTo, time, train, seatNo, trainClass, price, date));
+                if (save) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Save Booking !").show();
+                    loadAllBooking();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Something Wrong !").show();
+                }
+            }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void btnClearOnAction(ActionEvent actionEvent) {
@@ -214,6 +249,7 @@ public class AddBookingCustomerFromController {
     private void loadAllBooking() {
         tblCustomerBooking.getItems().clear();
         try {
+            //========================
             ArrayList<BookingCustomerDTO> all = bookingCustomerDAO.getAll();
             for (BookingCustomerDTO dto : all) {
                 tblCustomerBooking.getItems().add(
@@ -257,6 +293,7 @@ public class AddBookingCustomerFromController {
     public void txtSearchOnAction(ActionEvent actionEvent) {
 
         try {
+            //========================
             BookingCustomerDTO search = bookingCustomerDAO.search(txtCusId.getText());
             if (search != null) {
                 txtCusId.setText(search.getId());
@@ -274,6 +311,7 @@ public class AddBookingCustomerFromController {
             } else {
                 new Alert(Alert.AlertType.ERROR, "Empty Result..!").show();
             }
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
