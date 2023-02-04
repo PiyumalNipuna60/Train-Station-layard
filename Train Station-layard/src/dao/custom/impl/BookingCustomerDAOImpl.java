@@ -1,12 +1,14 @@
-package dao;
+package dao.custom.impl;
 
+import dao.SqlUtil;
+import dao.custom.BookingCustomerDAO;
 import model.BookingCustomerDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class BookingCustomerDAOImpl implements BookingCustomerDAO{
+public class BookingCustomerDAOImpl implements BookingCustomerDAO {
 
     public ArrayList<BookingCustomerDTO> getAll() throws SQLException, ClassNotFoundException {
         ArrayList<BookingCustomerDTO> allBokking=new ArrayList<>();

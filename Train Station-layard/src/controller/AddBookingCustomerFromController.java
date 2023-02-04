@@ -1,7 +1,7 @@
 package controller;
 
-import dao.BookingCustomerDAO;
-import dao.BookingCustomerDAOImpl;
+import dao.custom.BookingCustomerDAO;
+import dao.custom.impl.BookingCustomerDAOImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
