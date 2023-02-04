@@ -1,4 +1,44 @@
 package dao.custom.impl;
 
-public class TrainSchedulDAOImpl {
+import dao.custom.TrainSchedulDAO;
+import model.TrainSchedulCheckDTO;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class TrainSchedulDAOImpl implements TrainSchedulDAO {
+    @Override
+    public ArrayList<TrainSchedulCheckDTO> getAll() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean Save(TrainSchedulCheckDTO dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(TrainSchedulCheckDTO dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String s) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public TrainSchedulCheckDTO search(String s) throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean exist(String s) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public String generateNewId() throws SQLException, ClassNotFoundException {
+        return null;
+    }
 }
