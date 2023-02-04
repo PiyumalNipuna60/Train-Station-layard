@@ -88,10 +88,33 @@ public class AddEmployeeFromController {
 
 
     public void btnAddEmployeeOnAction() {
+     //========================
+        try {
+            boolean exist = employeeDAO.exist(txtEmpId.getText());
+            if (exist){
+                new Alert(Alert.AlertType.ERROR,"Duplicate ID !").show();
+            }else {
+                String EmployeeID = txtEmpId.getText();
+                String EmployeeName = txtEmpName.getText();
+                String EmployeeAddress = txtEmpAddress.getText();
+                String EmployeeAge=txtEmpAge.getText();
+                String EmployeeContact=txtEmpTel.getText();
+                String EmployeeSalary=txtEmpSalary.getText();
 
+                boolean save = employeeDAO.Save(new EmployeeDTO(EmployeeID, EmployeeName, EmployeeAddress, EmployeeAge, EmployeeContact, EmployeeSalary));
+                if (save){
+                    new Alert(Alert.AlertType.CONFIRMATION,"Save Employee !").show();
+                    loadAllEmployee();
+                }else {
+                    new Alert(Alert.AlertType.ERROR, "Something Wrong!").show();
+                }
+            }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
-    public void textFields_Key_Releaseed(KeyEvent keyEvent) {
+    public void textFields_Key_Releaseed(KeyEvent keyEvent) throws SQLException, ClassNotFoundException {
         Validation();
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
@@ -101,7 +124,12 @@ public class AddEmployeeFromController {
                 TextField textField = (TextField) responds;
                 textField.requestFocus();
             } else {
-                btnAddEmployeeOnAction();
+                boolean exist = employeeDAO.exist(txtEmpId.getText());
+                if (exist){
+
+                }else {
+                    btnAddEmployeeOnAction();
+                }
             }
         }
     }

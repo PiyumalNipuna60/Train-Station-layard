@@ -29,7 +29,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public boolean Save(EmployeeDTO dto) throws SQLException, ClassNotFoundException {
-        return false;
+       return SqlUtil.executeUpdate("Insert into employee values(?,?,?,?,?,?)",dto.getId(),dto.getName(),dto.getAddress(),dto.getAge(),dto.getContact(),dto.getSalary());
     }
 
     @Override
@@ -59,7 +59,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public boolean exist(String s) throws SQLException, ClassNotFoundException {
-        return false;
+        ResultSet resultSet = SqlUtil.executeQuery("SELECT id FROM employee WHERE id=?", s);
+        return resultSet.next();
     }
 
     @Override
