@@ -44,6 +44,17 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public EmployeeDTO search(String s) throws SQLException, ClassNotFoundException {
+        ResultSet rst = SqlUtil.executeQuery("Select * from employee where id=?", s);
+        if (rst.next()){
+            return new EmployeeDTO(
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getString(4),
+                    rst.getString(5),
+                    rst.getString(6));
+        }
+        return null;
     }
 
     @Override
