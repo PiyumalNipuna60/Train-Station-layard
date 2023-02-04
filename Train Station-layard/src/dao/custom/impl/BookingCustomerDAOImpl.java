@@ -49,13 +49,25 @@ public class BookingCustomerDAOImpl implements BookingCustomerDAO {
     }
 
     @Override
-    public boolean update(String s) throws SQLException, ClassNotFoundException {
-        return false;
+    public boolean update(BookingCustomerDTO dto) throws SQLException, ClassNotFoundException {
+        return SqlUtil.executeUpdate("UPDATE booking SET name=?,address=?,contact=?,trainFrom=?, trainTo=?, time=?, train=?, seatNo=?, class=?, price=?,date=?  WHERE id=?",
+                dto.getName(),
+                dto.getAddress(),
+                dto.getContact(),
+                dto.getTrainFrom(),
+                dto.getTrainTo(),
+                dto.getTime(),
+                dto.getTrain(),
+                dto.getSeatNo(),
+                dto.getClass(),
+                dto.getPrice(),
+                dto.getDate(),
+                dto.getId());
     }
 
     @Override
     public boolean delete(String s) throws SQLException, ClassNotFoundException {
-        return false;
+       return SqlUtil.executeUpdate("Delete from booking where id=?",s);
     }
 
     @Override

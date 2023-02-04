@@ -33,7 +33,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public boolean update(String s) throws SQLException, ClassNotFoundException {
+    public boolean update(EmployeeDTO dto) throws SQLException, ClassNotFoundException {
         return false;
     }
 
