@@ -16,12 +16,14 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.regex.Pattern;
 
 
 public class AddBookingCustomerFromController {
+    private final BookingCustomerDAO bookingCustomerDAO = new BookingCustomerDAOImpl();
     public Button btnBooking;
     public TextField txtCusName;
     public TextField txtCusId;
@@ -49,7 +51,6 @@ public class AddBookingCustomerFromController {
     public TextField txtCusBookDate;
     public TableColumn colDate;
     LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
-
 
     public void initialize() {
         uploadComboBox();
@@ -82,11 +83,8 @@ public class AddBookingCustomerFromController {
         colCusPrice.setCellValueFactory(new PropertyValueFactory("price"));
         colDate.setCellValueFactory(new PropertyValueFactory("date"));
 
-        try {
+
             loadAllBooking();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public void textFields_Key_Releaseed(KeyEvent keyEvent) {
@@ -213,7 +211,31 @@ public class AddBookingCustomerFromController {
         cmbCusClass.setItems(obList);
     }
 
-    private void loadAllBooking() throws ClassNotFoundException, SQLException {
+    private void loadAllBooking() {
+        tblCustomerBooking.getItems().clear();
+        try {
+            ArrayList<BookingCustomerDTO> all = bookingCustomerDAO.getAll();
+            for (BookingCustomerDTO dto : all) {
+                tblCustomerBooking.getItems().add(
+                        new BookingCustomerDTO(
+                                dto.getId(),
+                                dto.getName(),
+                                dto.getAddress(),
+                                dto.getContact(),
+                                dto.getTrainFrom(),
+                                dto.getTrainTo(),
+                                dto.getTime(),
+                                dto.getTrain(),
+                                dto.getSeatNo(),
+                                dto.getTrainClass(),
+                                dto.getPrice(),
+                                dto.getDate()));
+
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+
 
     }
 
@@ -235,7 +257,6 @@ public class AddBookingCustomerFromController {
     public void txtSearchOnAction(ActionEvent actionEvent) {
 
         try {
-            BookingCustomerDAO bookingCustomerDAO = new BookingCustomerDAOImpl();
             BookingCustomerDTO search = bookingCustomerDAO.search(txtCusId.getText());
             if (search != null) {
                 txtCusId.setText(search.getId());
@@ -250,28 +271,11 @@ public class AddBookingCustomerFromController {
                 cmbCusSeatNo.setValue(search.getSeatNo());
                 cmbCusClass.setValue(search.getTrainClass());
                 txtCusBookDate.setText(search.getDate());
-                System.out.println(search.getDate());
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Empty Result..!").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Empty Result..!").show();
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
-//            try {
-//                String sql = "SELECT * FROM booking WHERE id=?";
-//                PreparedStatement sta = DBConnection.getInstance().getConnection().prepareStatement(sql);
-//                if (sta.executeQuery()!=null) {
-//                    new Alert(Alert.AlertType.WARNING, "Id Already Used").show();
-//                    btnBooking.setDisable(true);
-//                }else {
-//                    return;
-//                }
-//            } catch (SQLException | ClassNotFoundException e) {
-//                e.printStackTrace();
-//            }
     }
-
-
 }

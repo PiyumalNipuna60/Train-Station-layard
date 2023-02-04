@@ -11,7 +11,7 @@ public class BookingCustomerDAOImpl implements BookingCustomerDAO{
     public ArrayList<BookingCustomerDTO> getAll() throws SQLException, ClassNotFoundException {
         ArrayList<BookingCustomerDTO> allBokking=new ArrayList<>();
         ResultSet resultSet = SqlUtil.executeQuery("SELECT * FROM booking");
-        if (resultSet.next()){
+        while (resultSet.next()){
             allBokking.add(new BookingCustomerDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
