@@ -1,4 +1,4 @@
 package dao.custom;
 
-public class TrainSchedulDAO {
+public interface TrainSchedulDAO {
 }
