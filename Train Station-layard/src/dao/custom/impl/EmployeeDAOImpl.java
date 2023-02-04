@@ -13,7 +13,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public ArrayList<EmployeeDTO> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SqlUtil.executeQuery("Select * from employee");
         ArrayList<EmployeeDTO> AllEmployee = new ArrayList<>();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             AllEmployee.add(
                     new EmployeeDTO(
                             resultSet.getString(1),
@@ -29,23 +29,35 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public boolean Save(EmployeeDTO dto) throws SQLException, ClassNotFoundException {
-       return SqlUtil.executeUpdate("Insert into employee values(?,?,?,?,?,?)",dto.getId(),dto.getName(),dto.getAddress(),dto.getAge(),dto.getContact(),dto.getSalary());
+        return SqlUtil.executeUpdate("Insert into employee values(?,?,?,?,?,?)",
+                dto.getId(),
+                dto.getName(),
+                dto.getAddress(),
+                dto.getAge(),
+                dto.getContact(),
+                dto.getSalary());
     }
 
     @Override
     public boolean update(EmployeeDTO dto) throws SQLException, ClassNotFoundException {
-        return false;
+        return SqlUtil.executeUpdate("UPDATE employee SET name=? ,address=? ,age=? ,contact=? ,salary=?  WHERE id= ?",
+                dto.getName(),
+                dto.getAddress(),
+                dto.getAge(),
+                dto.getContact(),
+                dto.getSalary(),
+                dto.getId());
     }
 
     @Override
     public boolean delete(String s) throws SQLException, ClassNotFoundException {
-        return false;
+        return SqlUtil.executeUpdate("Delete from employee where id=?",s);
     }
 
     @Override
     public EmployeeDTO search(String s) throws SQLException, ClassNotFoundException {
         ResultSet rst = SqlUtil.executeQuery("Select * from employee where id=?", s);
-        if (rst.next()){
+        if (rst.next()) {
             return new EmployeeDTO(
                     rst.getString(1),
                     rst.getString(2),
