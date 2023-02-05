@@ -257,14 +257,14 @@ public class AddBookingCustomerFromController {
         Object value2 = cmbCusFrom.getValue();
 
             try {
-
-
                 if (value1!=null && value2!=null){
 
-                    cmbCusTrain.getItems().clear();
-                    cmbCusTo.getValue();
-                    System.out.println("from : "+cmbCusFrom.getValue());
-                    System.out.println("To : "+cmbCusTo.getValue());
+//                    cmbCusTrain.getItems().clear();
+//                    cmbCusTo.getValue();
+//                    System.out.println("from : "+cmbCusFrom.getValue());
+//                    System.out.println("To : "+cmbCusTo.getValue());
+                    // method ekak liyala sql liyanna one
+
                 }else {
                     cmbCusTrain.getItems().clear();
                     ArrayList<TrainDTO> all = trainDAO.getAll();
@@ -274,10 +274,6 @@ public class AddBookingCustomerFromController {
                     }
                     cmbCusTrain.setItems(obList);
                 }
-
-
-
-
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             } catch (ClassNotFoundException e) {

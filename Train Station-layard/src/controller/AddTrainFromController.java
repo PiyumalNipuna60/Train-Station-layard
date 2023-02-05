@@ -144,8 +144,8 @@ public class AddTrainFromController {
         btnAddTrain.setDisable(true);
     }
 
+    //============================
     public void btnAddTrainOnAction() {
-
         try {
             boolean exist = trainDAO.exist(txtTrainId.getText());
             if (exist) {
@@ -159,7 +159,6 @@ public class AddTrainFromController {
                         cmbTrainFrom.getValue(),
                         cmbTrainTo.getValue()
                 ));
-
                 if (save) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Add New Train..!").show();
                     loadAllTrain();
@@ -170,11 +169,10 @@ public class AddTrainFromController {
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
-
-
         btnAddTrain.setDisable(true);
     }
 
+    //============================
     public void trainFrom() {
         try {
             ArrayList<StationDTO> all = stationDAO.getAll();
@@ -188,18 +186,18 @@ public class AddTrainFromController {
         }
     }
 
+    //============================
     public void trainTo() {
-//        try {
-//            ResultSet result = CrudUtil.executeQuery("SELECT * FROM station ORDER BY name ASC");
-//            ObservableList obList = FXCollections.observableArrayList();
-//            while (result.next()) {
-//                obList.add(result.getString(2));
-//            }
-//            cmbTrainTo.setItems(obList);
-//
-//        } catch (SQLException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            ArrayList<StationDTO> all = stationDAO.getAll();
+            ObservableList obList = FXCollections.observableArrayList();
+            for (StationDTO station : all) {
+                obList.add(new String(station.getName()));
+            }
+            cmbTrainTo.setItems(obList);
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void clear() {
