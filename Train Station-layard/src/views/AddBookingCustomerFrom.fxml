@@ -74,13 +74,13 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbCusFrom" editable="true" layoutX="642.0" layoutY="73.0" prefWidth="150.0" promptText="    -SELECT-" visibleRowCount="26" />
+      <ComboBox fx:id="cmbCusFrom" editable="true" layoutX="642.0" layoutY="73.0" onAction="#cmbCusFromOnAction" prefWidth="150.0" promptText="    -SELECT-" visibleRowCount="26" />
       <Label layoutX="560.0" layoutY="120.0" prefHeight="25.0" prefWidth="64.0" text="To         :">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbCusTo" editable="true" layoutX="642.0" layoutY="117.0" prefWidth="150.0" promptText="    -SELECT-" visibleRowCount="26" />
+      <ComboBox fx:id="cmbCusTo" editable="true" layoutX="642.0" layoutY="117.0" onAction="#cmbCusToOnAction" prefWidth="150.0" promptText="    -SELECT-" visibleRowCount="26" />
       <Label layoutX="561.0" layoutY="169.0" prefHeight="25.0" prefWidth="57.0" text="Train   :">
          <font>
             <Font size="16.0" />

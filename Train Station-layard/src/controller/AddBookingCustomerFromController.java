@@ -1,15 +1,20 @@
 package controller;
 
 import dao.custom.BookingCustomerDAO;
+import dao.custom.StationDAO;
+import dao.custom.TrainDAO;
 import dao.custom.impl.BookingCustomerDAOImpl;
+import dao.custom.impl.StationDAOImpl;
+import dao.custom.impl.TrainDAOImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.*;
 import model.BookingCustomerDTO;
+import model.StationDTO;
+import model.TrainDTO;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -24,6 +29,9 @@ import java.util.regex.Pattern;
 
 public class AddBookingCustomerFromController {
     private final BookingCustomerDAO bookingCustomerDAO = new BookingCustomerDAOImpl();
+    private final TrainDAO trainDAO = new TrainDAOImpl();
+    private final StationDAO stationDAO = new StationDAOImpl();
+
     public Button btnBooking;
     public TextField txtCusName;
     public TextField txtCusId;
@@ -213,24 +221,68 @@ public class AddBookingCustomerFromController {
     }
 
     public void uploadComboBox() {
-        comboFrom();
-        comboTo();
-        comboTrain();
-        comboSeatNo();
-        comboClass();
+        try {
+            comboFrom();
+            comboTo();
+            comboTrain();
+            comboSeatNo();
+            comboClass();
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
-    public void comboFrom() {
-
+    public void comboFrom() throws SQLException, ClassNotFoundException {
+        ArrayList<StationDTO> all = stationDAO.getAll();
+        ObservableList obList = FXCollections.observableArrayList();
+        for (StationDTO station :all) {
+            obList.add(new String(station.getName()));
+        }
+        cmbCusFrom.setItems(obList);
     }
 
-    public void comboTo() {
-
+    public void comboTo() throws SQLException, ClassNotFoundException {
+        ArrayList<StationDTO> all = stationDAO.getAll();
+        ObservableList<Object> obList = FXCollections.observableArrayList();
+        for (StationDTO station :all) {
+            obList.add(new String(station.getName()));
+        }
+        cmbCusTo.setItems(obList);
     }
 
     //from to train search karanna one
     public void comboTrain() {
+        Object value1 = cmbCusTo.getValue();
+        Object value2 = cmbCusFrom.getValue();
 
+            try {
+
+
+                if (value1!=null && value2!=null){
+
+                    cmbCusTrain.getItems().clear();
+                    cmbCusTo.getValue();
+                    System.out.println("from : "+cmbCusFrom.getValue());
+                    System.out.println("To : "+cmbCusTo.getValue());
+                }else {
+                    cmbCusTrain.getItems().clear();
+                    ArrayList<TrainDTO> all = trainDAO.getAll();
+                    ObservableList obList = FXCollections.observableArrayList();
+                    for (TrainDTO dto :all) {
+                        obList.add(new String(dto.getTrainName()));
+                    }
+                    cmbCusTrain.setItems(obList);
+                }
+
+
+
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
     }
 
     //available check karanna one
@@ -315,5 +367,13 @@ public class AddBookingCustomerFromController {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void cmbCusFromOnAction(ActionEvent actionEvent) {
+        comboTrain();
+    }
+
+    public void cmbCusToOnAction(ActionEvent actionEvent) {
+        comboTrain();
     }
 }
