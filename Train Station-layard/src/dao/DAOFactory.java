@@ -20,10 +20,10 @@ public class DAOFactory {
         BOOKING_CUSTOMER,EMPLOYEE,STATION,TRAIN,TRAIN_SCHEDULE
     }
 
-    public String getBOType(BOFactory.BoType type){
+    public SuperBO getBOType(BOFactory.BoType type){
         switch (type){
             case BOOKING_CUSTOMER:
-                return null;
+                return new BookingCustomerBOImpl();
             case EMPLOYEE:
                 return null;
             case STATION:
