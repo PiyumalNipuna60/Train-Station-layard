@@ -1,5 +1,7 @@
 package controller;
 
+import bo.custom.BOFactory;
+import bo.custom.BookingCustomerBO;
 import dao.custom.BookingCustomerDAO;
 import dao.custom.StationDAO;
 import dao.custom.TrainDAO;
@@ -28,9 +30,10 @@ import java.util.regex.Pattern;
 
 
 public class AddBookingCustomerFromController {
-    private final BookingCustomerDAO bookingCustomerDAO = new BookingCustomerDAOImpl();
     private final TrainDAO trainDAO = new TrainDAOImpl();
     private final StationDAO stationDAO = new StationDAOImpl();
+
+    private final BookingCustomerBO bookingCustomerBO = (BookingCustomerBO) BOFactory.getBoFactory().getBOType(BOFactory.BoType.BOOKING_CUSTOMER);
 
     public Button btnBooking;
     public TextField txtCusName;
@@ -106,7 +109,7 @@ public class AddBookingCustomerFromController {
                 textField.requestFocus();
             } else {
                //========================
-                boolean exist = bookingCustomerDAO.exist(txtCusId.getText());
+                boolean exist = bookingCustomerBO.existCustomerBooking(txtCusId.getText());
                 if (exist) {
 
                 } else {
@@ -143,7 +146,6 @@ public class AddBookingCustomerFromController {
 
     public void btnBookingOnAction() {
         try {
-            //========================
             String customerID = txtCusId.getText();
             String customerName = txtCusName.getText();
             String customerAddress = txtCusAddress.getText();
@@ -157,16 +159,17 @@ public class AddBookingCustomerFromController {
             String price = txtCusPrice.getText();
             String date = txtCusBookDate.getText();
 
-            boolean exist = bookingCustomerDAO.exist(customerID);
+            boolean exist = bookingCustomerBO.existCustomerBooking(customerID);
             if (exist) {
                 new Alert(Alert.AlertType.ERROR, "All Ready Add ID!").show();
             } else {
                 btnBooking.setVisible(true);
-                boolean save = bookingCustomerDAO.Save(new BookingCustomerDTO(customerID, customerName, customerAddress,
+                boolean save = bookingCustomerBO.saveCustomerBooking(new BookingCustomerDTO(customerID, customerName, customerAddress,
                         customerContact, trainFrom, trainTo, time, train, seatNo, trainClass, price, date));
                 if (save) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Save Booking !").show();
                     loadAllBooking();
+                    clear();
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Something Wrong !").show();
                 }
@@ -210,7 +213,6 @@ public class AddBookingCustomerFromController {
         try {
             JasperDesign load = JRXmlLoader.load(this.getClass().getResourceAsStream("/views/reports/BookingReport.jrxml"));
             JasperReport compileReport = JasperCompileManager.compileReport(load);
-            //  JasperReport compileReport= (JasperReport) JRLoader.loadObject(this.getClass().getResource("/view/reports/BookingReport.jasper"));
             JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, map, new JREmptyDataSource(1));
             JasperViewer.viewReport(jasperPrint, false);
 
@@ -297,8 +299,7 @@ public class AddBookingCustomerFromController {
     private void loadAllBooking() {
         tblCustomerBooking.getItems().clear();
         try {
-            //========================
-            ArrayList<BookingCustomerDTO> all = bookingCustomerDAO.getAll();
+            ArrayList<BookingCustomerDTO> all = bookingCustomerBO.getAllCustomerBooking();
             for (BookingCustomerDTO dto : all) {
                 tblCustomerBooking.getItems().add(
                         new BookingCustomerDTO(
@@ -341,8 +342,7 @@ public class AddBookingCustomerFromController {
     public void txtSearchOnAction(ActionEvent actionEvent) {
 
         try {
-            //========================
-            BookingCustomerDTO search = bookingCustomerDAO.search(txtCusId.getText());
+            BookingCustomerDTO search = bookingCustomerBO.searchCustomerBook(txtCusId.getText());
             if (search != null) {
                 txtCusId.setText(search.getId());
                 txtCusName.setText(search.getName());

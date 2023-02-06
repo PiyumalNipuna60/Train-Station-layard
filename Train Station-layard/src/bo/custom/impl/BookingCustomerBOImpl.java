@@ -2,6 +2,7 @@ package bo.custom.impl;
 
 import bo.custom.BOFactory;
 import bo.custom.BookingCustomerBO;
+import dao.DAOFactory;
 import dao.custom.impl.BookingCustomerDAOImpl;
 import model.BookingCustomerDTO;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 
 public class BookingCustomerBOImpl implements BookingCustomerBO {
 //    BookingCustomerDAOImpl bookingCustomerDAO = new BookingCustomerDAOImpl();
-BookingCustomerDAOImpl bookingCustomerDAO = (BookingCustomerDAOImpl) BOFactory.getBoFactory().getBOType(BOFactory.BoType.BOOKING_CUSTOMER);
+BookingCustomerDAOImpl bookingCustomerDAO = (BookingCustomerDAOImpl) DAOFactory.getDaoFactory().getBOType(DAOFactory.DAOTypes.BOOKING_CUSTOMER);
     @Override
     public ArrayList<BookingCustomerDTO> getAllCustomerBooking() throws SQLException, ClassNotFoundException {
         return bookingCustomerDAO.getAll();
@@ -39,5 +40,10 @@ BookingCustomerDAOImpl bookingCustomerDAO = (BookingCustomerDAOImpl) BOFactory.g
     @Override
     public String generateCustomerBookingNewId() throws SQLException, ClassNotFoundException {
         return null;
+    }
+
+    @Override
+    public BookingCustomerDTO searchCustomerBook(String s) throws SQLException, ClassNotFoundException {
+        return bookingCustomerDAO.search(s);
     }
 }
