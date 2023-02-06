@@ -51,7 +51,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public boolean delete(String s) throws SQLException, ClassNotFoundException {
-        return SqlUtil.executeUpdate("Delete from employee where id=?",s);
+        return SqlUtil.executeUpdate("Delete from employee where id=?", s);
     }
 
     @Override

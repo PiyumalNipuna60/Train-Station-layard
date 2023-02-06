@@ -1,5 +1,7 @@
 package controller;
 
+import bo.custom.BOFactory;
+import bo.custom.TrainBO;
 import dao.custom.StationDAO;
 import dao.custom.TrainDAO;
 import dao.custom.impl.StationDAOImpl;
@@ -25,7 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.regex.Pattern;
 
 public class AddTrainFromController {
-    private final TrainDAO trainDAO = new TrainDAOImpl();
+    private final TrainBO trainBO = (TrainBO) BOFactory.getBoFactory().getBOType(BOFactory.BoType.TRAIN);
     private final StationDAO stationDAO = new StationDAOImpl();
     public Button btnBack;
     public ComboBox cmbTrainTo;
@@ -72,13 +74,10 @@ public class AddTrainFromController {
         loadAllTrain();
     }
 
-
-    //============================
     private void loadAllTrain() {
         try {
-            //============================
             tblAllTrain.getItems().clear();
-            ArrayList<TrainDTO> all = trainDAO.getAll();
+            ArrayList<TrainDTO> all = trainBO.getAllTrain();
 
             for (TrainDTO train : all) {
                 tblAllTrain.getItems().add(
@@ -97,8 +96,6 @@ public class AddTrainFromController {
         }
     }
 
-
-    //============================
     public void textFields_Key_Released(KeyEvent keyEvent) throws SQLException, ClassNotFoundException {
         Validation();
 
@@ -109,7 +106,7 @@ public class AddTrainFromController {
                 TextField textField = (TextField) responds;
                 textField.requestFocus();
             } else {
-                boolean exist = trainDAO.exist(txtTrainId.getText());
+                boolean exist = trainBO.existTrain(txtTrainId.getText());
                 if (exist) {
 
                 } else {
@@ -144,14 +141,13 @@ public class AddTrainFromController {
         btnAddTrain.setDisable(true);
     }
 
-    //============================
     public void btnAddTrainOnAction() {
         try {
-            boolean exist = trainDAO.exist(txtTrainId.getText());
+            boolean exist = trainBO.existTrain(txtTrainId.getText());
             if (exist) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Duplicate Train ID..!").show();
             } else {
-                boolean save = trainDAO.Save(new TrainDTO(
+                boolean save = trainBO.SaveTrain(new TrainDTO(
                         txtTrainId.getText(),
                         txtTrainName.getText(),
                         txtStartTime.getText(),
@@ -172,7 +168,6 @@ public class AddTrainFromController {
         btnAddTrain.setDisable(true);
     }
 
-    //============================
     public void trainFrom() {
         try {
             ArrayList<StationDTO> all = stationDAO.getAll();
@@ -186,7 +181,6 @@ public class AddTrainFromController {
         }
     }
 
-    //============================
     public void trainTo() {
         try {
             ArrayList<StationDTO> all = stationDAO.getAll();
@@ -209,11 +203,9 @@ public class AddTrainFromController {
         cmbTrainTo.getSelectionModel().clearSelection();
     }
 
-
-    //============================
     public void txtSearchOnAction(ActionEvent actionEvent) {
         try {
-            TrainDTO search = trainDAO.search(txtTrainId.getText());
+            TrainDTO search = trainBO.searchTrain(txtTrainId.getText());
             if (search != null) {
                 txtTrainName.setText(search.getTrainName());
                 txtStartTime.setText(search.getStartTime());

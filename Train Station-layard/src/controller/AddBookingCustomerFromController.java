@@ -2,10 +2,8 @@ package controller;
 
 import bo.custom.BOFactory;
 import bo.custom.BookingCustomerBO;
-import dao.custom.BookingCustomerDAO;
 import dao.custom.StationDAO;
 import dao.custom.TrainDAO;
-import dao.custom.impl.BookingCustomerDAOImpl;
 import dao.custom.impl.StationDAOImpl;
 import dao.custom.impl.TrainDAOImpl;
 import javafx.collections.FXCollections;
@@ -13,7 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import model.BookingCustomerDTO;
 import model.StationDTO;
 import model.TrainDTO;
@@ -108,7 +107,7 @@ public class AddBookingCustomerFromController {
                 TextField textField = (TextField) responds;
                 textField.requestFocus();
             } else {
-               //========================
+                //========================
                 boolean exist = bookingCustomerBO.existCustomerBooking(txtCusId.getText());
                 if (exist) {
 
@@ -238,7 +237,7 @@ public class AddBookingCustomerFromController {
     public void comboFrom() throws SQLException, ClassNotFoundException {
         ArrayList<StationDTO> all = stationDAO.getAll();
         ObservableList obList = FXCollections.observableArrayList();
-        for (StationDTO station :all) {
+        for (StationDTO station : all) {
             obList.add(new String(station.getName()));
         }
         cmbCusFrom.setItems(obList);
@@ -247,7 +246,7 @@ public class AddBookingCustomerFromController {
     public void comboTo() throws SQLException, ClassNotFoundException {
         ArrayList<StationDTO> all = stationDAO.getAll();
         ObservableList<Object> obList = FXCollections.observableArrayList();
-        for (StationDTO station :all) {
+        for (StationDTO station : all) {
             obList.add(new String(station.getName()));
         }
         cmbCusTo.setItems(obList);
@@ -258,29 +257,29 @@ public class AddBookingCustomerFromController {
         Object value1 = cmbCusTo.getValue();
         Object value2 = cmbCusFrom.getValue();
 
-            try {
-                if (value1!=null && value2!=null){
+        try {
+            if (value1 != null && value2 != null) {
 
 //                    cmbCusTrain.getItems().clear();
 //                    cmbCusTo.getValue();
 //                    System.out.println("from : "+cmbCusFrom.getValue());
 //                    System.out.println("To : "+cmbCusTo.getValue());
-                    // method ekak liyala sql liyanna one
+                // method ekak liyala sql liyanna one
 
-                }else {
-                    cmbCusTrain.getItems().clear();
-                    ArrayList<TrainDTO> all = trainDAO.getAll();
-                    ObservableList obList = FXCollections.observableArrayList();
-                    for (TrainDTO dto :all) {
-                        obList.add(new String(dto.getTrainName()));
-                    }
-                    cmbCusTrain.setItems(obList);
+            } else {
+                cmbCusTrain.getItems().clear();
+                ArrayList<TrainDTO> all = trainDAO.getAll();
+                ObservableList obList = FXCollections.observableArrayList();
+                for (TrainDTO dto : all) {
+                    obList.add(new String(dto.getTrainName()));
                 }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                cmbCusTrain.setItems(obList);
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     //available check karanna one

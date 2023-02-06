@@ -2,8 +2,6 @@ package controller;
 
 import bo.custom.BOFactory;
 import bo.custom.EmployeeBO;
-import dao.custom.EmployeeDAO;
-import dao.custom.impl.EmployeeDAOImpl;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;

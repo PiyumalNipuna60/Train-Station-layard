@@ -3,26 +3,23 @@ package bo.custom;
 import bo.SuperBO;
 import bo.custom.impl.BookingCustomerBOImpl;
 import bo.custom.impl.EmployeeBOImpl;
-import dao.custom.impl.BookingCustomerDAOImpl;
+import bo.custom.impl.TrainBOImpl;
 
 public class BOFactory {
     private static BOFactory boFactory;
 
-    private BOFactory(){}
+    private BOFactory() {
+    }
 
-    public static BOFactory getBoFactory(){
-        if (boFactory==null){
-             boFactory = new BOFactory();
+    public static BOFactory getBoFactory() {
+        if (boFactory == null) {
+            boFactory = new BOFactory();
         }
         return boFactory;
     }
 
-    public enum BoType{
-        BOOKING_CUSTOMER,EMPLOYEE,STATION,TRAIN,TRAIN_SCHEDULE
-    }
-
-    public SuperBO getBOType(BoType type){
-        switch (type){
+    public SuperBO getBOType(BoType type) {
+        switch (type) {
             case BOOKING_CUSTOMER:
                 return new BookingCustomerBOImpl();
             case EMPLOYEE:
@@ -30,12 +27,16 @@ public class BOFactory {
             case STATION:
                 return null;
             case TRAIN:
-                return null;
+                return new TrainBOImpl();
             case TRAIN_SCHEDULE:
                 return null;
             default:
                 return null;
         }
+    }
+
+    public enum BoType {
+        BOOKING_CUSTOMER, EMPLOYEE, STATION, TRAIN, TRAIN_SCHEDULE
     }
 
 }

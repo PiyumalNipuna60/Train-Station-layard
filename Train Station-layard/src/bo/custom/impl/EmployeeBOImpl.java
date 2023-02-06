@@ -2,6 +2,7 @@ package bo.custom.impl;
 
 import bo.custom.EmployeeBO;
 import dao.DAOFactory;
+import dao.custom.EmployeeDAO;
 import dao.custom.impl.EmployeeDAOImpl;
 import model.EmployeeDTO;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 
 public class EmployeeBOImpl implements EmployeeBO {
 
-    EmployeeDAOImpl employeeDAO = (EmployeeDAOImpl) DAOFactory.getDaoFactory().getBOType(DAOFactory.DAOTypes.EMPLOYEE);
+    private final EmployeeDAO employeeDAO = (EmployeeDAOImpl) DAOFactory.getDaoFactory().getBOType(DAOFactory.DAOTypes.EMPLOYEE);
 
     @Override
     public ArrayList<EmployeeDTO> getAllEmployee() throws SQLException, ClassNotFoundException {

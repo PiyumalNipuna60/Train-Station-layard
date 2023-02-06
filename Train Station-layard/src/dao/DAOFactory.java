@@ -1,29 +1,23 @@
 package dao;
 
-import bo.SuperBO;
-import bo.custom.BOFactory;
-import bo.custom.impl.BookingCustomerBOImpl;
 import dao.custom.impl.BookingCustomerDAOImpl;
 import dao.custom.impl.EmployeeDAOImpl;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
 
-    private DAOFactory(){}
+    private DAOFactory() {
+    }
 
-    public static DAOFactory getDaoFactory(){
-        if (daoFactory==null){
-            daoFactory=new DAOFactory();
+    public static DAOFactory getDaoFactory() {
+        if (daoFactory == null) {
+            daoFactory = new DAOFactory();
         }
         return daoFactory;
     }
 
-    public enum DAOTypes{
-        BOOKING_CUSTOMER,EMPLOYEE,STATION,TRAIN,TRAIN_SCHEDULE
-    }
-
-    public SuperDAO getBOType(DAOTypes type){
-        switch (type){
+    public SuperDAO getBOType(DAOTypes type) {
+        switch (type) {
             case BOOKING_CUSTOMER:
                 return new BookingCustomerDAOImpl();
             case EMPLOYEE:
@@ -37,5 +31,9 @@ public class DAOFactory {
             default:
                 return null;
         }
+    }
+
+    public enum DAOTypes {
+        BOOKING_CUSTOMER, EMPLOYEE, STATION, TRAIN, TRAIN_SCHEDULE
     }
 }
