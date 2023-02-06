@@ -4,6 +4,7 @@ import bo.SuperBO;
 import bo.custom.BOFactory;
 import bo.custom.impl.BookingCustomerBOImpl;
 import dao.custom.impl.BookingCustomerDAOImpl;
+import dao.custom.impl.EmployeeDAOImpl;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
@@ -26,7 +27,7 @@ public class DAOFactory {
             case BOOKING_CUSTOMER:
                 return new BookingCustomerDAOImpl();
             case EMPLOYEE:
-                return null;
+                return new EmployeeDAOImpl();
             case STATION:
                 return null;
             case TRAIN:

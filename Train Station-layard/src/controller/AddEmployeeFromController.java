@@ -1,5 +1,7 @@
 package controller;
 
+import bo.custom.BOFactory;
+import bo.custom.EmployeeBO;
 import dao.custom.EmployeeDAO;
 import dao.custom.impl.EmployeeDAOImpl;
 import javafx.event.ActionEvent;
@@ -40,7 +42,7 @@ public class AddEmployeeFromController {
     public TableColumn colEmpSalary;
     LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
 
-    private final EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    private final EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBOType(BOFactory.BoType.EMPLOYEE);
 
 
     public void initialize() {
@@ -73,9 +75,8 @@ public class AddEmployeeFromController {
 
     private void loadAllEmployee() {
         tblEmployee.getItems().clear();
-        //========================
         try {
-            ArrayList<EmployeeDTO>  all = employeeDAO.getAll();
+            ArrayList<EmployeeDTO>  all = employeeBO.getAllEmployee();
             for (EmployeeDTO employee :all) {
                tblEmployee.getItems().add(
                        new EmployeeDTO(employee.getId(),employee.getName(),employee.getAddress(),employee.getAge(),
@@ -88,9 +89,8 @@ public class AddEmployeeFromController {
 
 
     public void btnAddEmployeeOnAction() {
-     //========================
         try {
-            boolean exist = employeeDAO.exist(txtEmpId.getText());
+            boolean exist = employeeBO.existEmployee(txtEmpId.getText());
             if (exist){
                 new Alert(Alert.AlertType.ERROR,"Duplicate ID !").show();
             }else {
@@ -101,10 +101,11 @@ public class AddEmployeeFromController {
                 String EmployeeContact=txtEmpTel.getText();
                 String EmployeeSalary=txtEmpSalary.getText();
 
-                boolean save = employeeDAO.Save(new EmployeeDTO(EmployeeID, EmployeeName, EmployeeAddress, EmployeeAge, EmployeeContact, EmployeeSalary));
+                boolean save = employeeBO.SaveEmployee(new EmployeeDTO(EmployeeID, EmployeeName, EmployeeAddress, EmployeeAge, EmployeeContact, EmployeeSalary));
                 if (save){
                     new Alert(Alert.AlertType.CONFIRMATION,"Save Employee !").show();
                     loadAllEmployee();
+                    clear();
                 }else {
                     new Alert(Alert.AlertType.ERROR, "Something Wrong!").show();
                 }
@@ -124,7 +125,7 @@ public class AddEmployeeFromController {
                 TextField textField = (TextField) responds;
                 textField.requestFocus();
             } else {
-                boolean exist = employeeDAO.exist(txtEmpId.getText());
+                boolean exist = employeeBO.existEmployee(txtEmpId.getText());
                 if (exist){
 
                 }else {
@@ -165,7 +166,7 @@ public class AddEmployeeFromController {
 
     public void SearchOnAction(ActionEvent actionEvent) {
         try {
-            EmployeeDTO search = employeeDAO.search(txtEmpId.getText());
+            EmployeeDTO search = employeeBO.searchEmployee(txtEmpId.getText());
             if (search!=null){
                 txtEmpName.setText(search.getName());
                 txtEmpAddress.setText(search.getAddress());

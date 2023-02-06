@@ -1,5 +1,6 @@
 package bo.custom;
 
+import bo.SuperBO;
 import dao.SqlUtil;
 import model.EmployeeDTO;
 
@@ -7,7 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface EmployeeBO {
+public interface EmployeeBO extends SuperBO {
+
     public ArrayList<EmployeeDTO> getAllEmployee() throws SQLException, ClassNotFoundException;
 
     public boolean SaveEmployee(EmployeeDTO dto) throws SQLException, ClassNotFoundException;

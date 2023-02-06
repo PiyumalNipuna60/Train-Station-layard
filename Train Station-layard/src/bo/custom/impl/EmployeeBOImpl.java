@@ -10,9 +10,7 @@ import java.util.ArrayList;
 
 public class EmployeeBOImpl implements EmployeeBO {
 
-
     EmployeeDAOImpl employeeDAO = (EmployeeDAOImpl) DAOFactory.getDaoFactory().getBOType(DAOFactory.DAOTypes.EMPLOYEE);
-
 
     @Override
     public ArrayList<EmployeeDTO> getAllEmployee() throws SQLException, ClassNotFoundException {
