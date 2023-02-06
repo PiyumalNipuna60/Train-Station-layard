@@ -12,28 +12,27 @@ public class BookingCustomerBOImpl implements BookingCustomerBO {
 
     @Override
     public ArrayList<BookingCustomerDTO> getAllCustomerBooking() throws SQLException, ClassNotFoundException {
-
-        return null;
+        return bookingCustomerDAO.getAll();
     }
 
     @Override
     public boolean saveCustomerBooking(BookingCustomerDTO dto) throws SQLException, ClassNotFoundException {
-        return false;
+        return bookingCustomerDAO.Save(dto);
     }
 
     @Override
     public boolean updateCustomerBooking(BookingCustomerDTO dto) throws SQLException, ClassNotFoundException {
-        return false;
+        return bookingCustomerDAO.update(dto);
     }
 
     @Override
     public boolean existCustomerBooking(String id) throws SQLException, ClassNotFoundException {
-        return false;
+        return bookingCustomerDAO.exist(id);
     }
 
     @Override
     public boolean deleteCustomerBooking(String id) throws SQLException, ClassNotFoundException {
-        return false;
+        return bookingCustomerDAO.delete(id);
     }
 
     @Override
