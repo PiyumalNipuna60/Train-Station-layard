@@ -1,5 +1,6 @@
 package bo.custom.impl;
 
+import bo.custom.BOFactory;
 import bo.custom.BookingCustomerBO;
 import dao.custom.impl.BookingCustomerDAOImpl;
 import model.BookingCustomerDTO;
@@ -8,8 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BookingCustomerBOImpl implements BookingCustomerBO {
-    BookingCustomerDAOImpl bookingCustomerDAO = new BookingCustomerDAOImpl();
-
+//    BookingCustomerDAOImpl bookingCustomerDAO = new BookingCustomerDAOImpl();
+BookingCustomerDAOImpl bookingCustomerDAO = (BookingCustomerDAOImpl) BOFactory.getBoFactory().getBOType(BOFactory.BoType.BOOKING_CUSTOMER);
     @Override
     public ArrayList<BookingCustomerDTO> getAllCustomerBooking() throws SQLException, ClassNotFoundException {
         return bookingCustomerDAO.getAll();

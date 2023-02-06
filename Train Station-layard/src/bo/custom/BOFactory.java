@@ -1,6 +1,7 @@
 package bo.custom;
 
 import bo.SuperBO;
+import bo.custom.impl.BookingCustomerBOImpl;
 import dao.custom.impl.BookingCustomerDAOImpl;
 
 public class BOFactory {
@@ -8,7 +9,7 @@ public class BOFactory {
 
     private BOFactory(){}
 
-    private BOFactory getBoFactory(){
+    public static BOFactory getBoFactory(){
         if (boFactory==null){
              boFactory = new BOFactory();
         }
@@ -22,7 +23,7 @@ public class BOFactory {
     public SuperBO getBOType(BoType type){
         switch (type){
             case BOOKING_CUSTOMER:
-                return null;
+                return new BookingCustomerBOImpl();
             case EMPLOYEE:
                 return null;
             case STATION:
