@@ -1,6 +1,6 @@
 package controller;
 
-import bo.custom.BOFactory;
+import bo.BOFactory;
 import bo.custom.EmployeeBO;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;

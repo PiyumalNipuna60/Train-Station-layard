@@ -1,7 +1,6 @@
 package dao;
 
-import dao.custom.impl.BookingCustomerDAOImpl;
-import dao.custom.impl.EmployeeDAOImpl;
+import dao.custom.impl.*;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
@@ -23,11 +22,11 @@ public class DAOFactory {
             case EMPLOYEE:
                 return new EmployeeDAOImpl();
             case STATION:
-                return null;
+                return new StationDAOImpl();
             case TRAIN:
-                return null;
+                return new TrainDAOImpl();
             case TRAIN_SCHEDULE:
-                return null;
+                return new TrainSchedulDAOImpl();
             default:
                 return null;
         }

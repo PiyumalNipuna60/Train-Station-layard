@@ -1,9 +1,6 @@
-package bo.custom;
+package bo;
 
-import bo.SuperBO;
-import bo.custom.impl.BookingCustomerBOImpl;
-import bo.custom.impl.EmployeeBOImpl;
-import bo.custom.impl.TrainBOImpl;
+import bo.custom.impl.*;
 
 public class BOFactory {
     private static BOFactory boFactory;
@@ -25,11 +22,11 @@ public class BOFactory {
             case EMPLOYEE:
                 return new EmployeeBOImpl();
             case STATION:
-                return null;
+                return new StationBOImpl();
             case TRAIN:
                 return new TrainBOImpl();
             case TRAIN_SCHEDULE:
-                return null;
+                return new TrainSchedulBOImpl();
             default:
                 return null;
         }

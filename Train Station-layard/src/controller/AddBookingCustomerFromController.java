@@ -1,6 +1,6 @@
 package controller;
 
-import bo.custom.BOFactory;
+import bo.BOFactory;
 import bo.custom.BookingCustomerBO;
 import dao.custom.StationDAO;
 import dao.custom.TrainDAO;
