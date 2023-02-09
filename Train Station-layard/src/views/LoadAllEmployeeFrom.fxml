@@ -17,7 +17,7 @@
             <Font name="System Bold Italic" size="27.0" />
          </font>
       </Label>
-      <TableView fx:id="tblEmployee" layoutX="48.0" layoutY="92.0" prefHeight="491.0" prefWidth="1067.0">
+      <TableView fx:id="tblEmployee" layoutX="48.0" layoutY="92.0" prefHeight="491.0" prefWidth="1067.0" tableMenuButtonVisible="true">
          <columns>
             <TableColumn fx:id="colEmpId" prefWidth="141.0" text="Emp Id" />
             <TableColumn fx:id="colEmpName" prefWidth="209.0" text="Employee Name" />
