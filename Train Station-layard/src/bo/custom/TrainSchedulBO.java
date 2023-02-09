@@ -3,6 +3,7 @@ package bo.custom;
 import bo.SuperBO;
 import model.TrainSchedulCheckDTO;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -21,4 +22,7 @@ public interface TrainSchedulBO extends SuperBO {
     public boolean exist(String s) throws SQLException, ClassNotFoundException;
 
     public String generateNewId() throws SQLException, ClassNotFoundException ;
+
+    public ResultSet TrainSchedulCheck(String from, String to) throws SQLException, ClassNotFoundException;
+
 }

@@ -83,4 +83,5 @@ public class TrainDAOImpl implements TrainDAO {
     public String generateNewId() throws SQLException, ClassNotFoundException {
         return null;
     }
+
 }
