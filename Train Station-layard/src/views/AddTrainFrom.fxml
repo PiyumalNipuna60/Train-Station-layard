@@ -10,10 +10,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="673.0" prefWidth="1163.0" style="-fx-border-radius: 10px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddTrainFromController">
+<AnchorPane prefHeight="673.0" prefWidth="1163.0" style="-fx-border-radius: 10px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddTrainFromController">
    <children>
+      <Pane layoutX="16.0" layoutY="65.0" opacity="0.53" prefHeight="586.0" prefWidth="456.0" style="-fx-background-color: gray; -fx-background-radius: 25;" />
       <ImageView fitHeight="624.0" fitWidth="1170.0" layoutX="-2.0" layoutY="45.0" opacity="0.59" pickOnBounds="true">
          <image>
             <Image url="@../assets/OE612L0.jpg" />
@@ -28,7 +30,7 @@
       <AnchorPane layoutX="34.0" layoutY="76.0" prefHeight="37.0" prefWidth="415.0" style="-fx-border-color: black; -fx-background-color: #ffffff; -fx-border-radius: 15; -fx-background-radius: 15;">
          <children>
             <TextField fx:id="txtTrainId" layoutX="11.0" layoutY="4.0" onAction="#txtSearchOnAction" onKeyReleased="#textFields_Key_Released" prefHeight="33.0" prefWidth="404.0" promptText="T00-001" style="-fx-border-color: white; -fx-background-color: white; -fx-border-radius: 15px; -fx-background-radius: 15;" />
-            <Label layoutX="14.0" layoutY="-11.0" prefHeight="23.0" prefWidth="73.0" style="-fx-background-color: white; -fx-border-color: white;" text="  Train Id">
+            <Label layoutX="14.0" layoutY="-11.0" prefHeight="23.0" prefWidth="73.0" style="-fx-background-color: white; -fx-border-color: gray;" text="  Train Id">
                <effect>
                   <Blend mode="SRC_ATOP" />
                </effect>
@@ -38,7 +40,7 @@
       <AnchorPane layoutX="34.0" layoutY="156.0" prefHeight="37.0" prefWidth="415.0" style="-fx-border-color: black; -fx-background-color: #ffffff; -fx-border-radius: 15; -fx-background-radius: 15;">
          <children>
             <TextField fx:id="txtTrainName" layoutX="11.0" layoutY="4.0" onKeyReleased="#textFields_Key_Released" prefHeight="33.0" prefWidth="404.0" promptText="Rajarata" style="-fx-border-color: white; -fx-background-color: white; -fx-border-radius: 15; -fx-background-radius: 15;" />
-            <Label layoutX="8.0" layoutY="-10.0" prefHeight="21.0" prefWidth="99.0" style="-fx-background-color: white;" text="  Train Name">
+            <Label layoutX="8.0" layoutY="-10.0" prefHeight="21.0" prefWidth="99.0" style="-fx-background-color: white; -fx-border-color: gray;" text="  Train Name">
                <effect>
                   <Blend mode="SRC_ATOP" />
                </effect>
@@ -48,7 +50,7 @@
       <AnchorPane layoutX="34.0" layoutY="236.0" prefHeight="39.0" prefWidth="181.0" style="-fx-border-color: black; -fx-background-color: #ffffff; -fx-border-radius: 15; -fx-background-radius: 15;">
          <children>
             <TextField fx:id="txtStartTime" layoutX="7.0" layoutY="4.0" onKeyReleased="#textFields_Key_Released" prefHeight="33.0" prefWidth="170.0" promptText="24.00" style="-fx-border-color: white; -fx-background-color: white; -fx-border-radius: 15; -fx-background-radius: 15;" />
-            <Label layoutX="14.0" layoutY="-11.0" prefHeight="23.0" prefWidth="85.0" style="-fx-background-color: white; -fx-border-color: white;" text="Start  Time">
+            <Label layoutX="14.0" layoutY="-11.0" prefHeight="23.0" prefWidth="85.0" style="-fx-background-color: white; -fx-border-color: gray;" text="Start  Time">
                <effect>
                   <Blend mode="SRC_ATOP" />
                </effect>
@@ -70,7 +72,7 @@
       <AnchorPane layoutX="260.0" layoutY="236.0" prefHeight="39.0" prefWidth="181.0" style="-fx-border-color: black; -fx-background-color: #ffffff; -fx-border-radius: 15; -fx-background-radius: 15;">
          <children>
             <TextField fx:id="txtEndTime" layoutX="6.0" layoutY="4.0" onKeyReleased="#textFields_Key_Released" prefHeight="33.0" prefWidth="163.0" promptText="24.00" style="-fx-border-color: white; -fx-background-color: white; -fx-border-radius: 15; -fx-background-radius: 15;" />
-            <Label layoutX="14.0" layoutY="-11.0" prefHeight="23.0" prefWidth="85.0" style="-fx-background-color: white; -fx-border-color: white;" text="End Time">
+            <Label layoutX="14.0" layoutY="-11.0" prefHeight="23.0" prefWidth="85.0" style="-fx-background-color: white; -fx-border-color: gray;" text="End Time">
                <effect>
                   <Blend mode="SRC_ATOP" />
                </effect>

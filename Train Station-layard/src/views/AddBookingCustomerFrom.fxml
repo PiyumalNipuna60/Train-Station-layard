@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="686.0" prefWidth="1163.0" style="-fx-border-radius: 10px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddBookingCustomerFromController">
+<AnchorPane prefHeight="686.0" prefWidth="1163.0" style="-fx-border-radius: 10px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddBookingCustomerFromController">
    <children>
+      <Pane layoutX="13.0" layoutY="59.0" opacity="0.65" prefHeight="282.0" prefWidth="1137.0" style="-fx-background-color: Gray; -fx-background-radius: 15; -fx-border-radius: 15;" />
       <ImageView disable="true" fitHeight="645.0" fitWidth="1163.0" layoutY="42.0" opacity="0.29" pickOnBounds="true" smooth="false">
          <image>
             <Image url="@../assets/sideways-woman-listening-music-train-platform.jpg" />
@@ -115,7 +125,7 @@
          </font>
       </Label>
       <ComboBox fx:id="cmbCusClass" editable="true" layoutX="647.0" layoutY="268.0" prefWidth="150.0" promptText="    -SELECT-" visibleRowCount="3" />
-      <Separator layoutX="9.0" layoutY="342.0" prefHeight="0.0" prefWidth="1145.0" />
+      <Separator layoutX="9.0" layoutY="346.0" prefHeight="5.0" prefWidth="1145.0" style="-fx-background-color: red;" />
       <TableView fx:id="tblCustomerBooking" layoutX="6.0" layoutY="358.0" prefHeight="314.0" prefWidth="1151.0">
          <columns>
             <TableColumn fx:id="colCusId" prefWidth="73.0" text="Cus Id" />

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="salaryAnchorPane" prefHeight="656.0" prefWidth="1163.0" style="-fx-border-radius: 10px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EmployeeSalaryFromController">
+   <children>
+      <ImageView fitHeight="674.0" fitWidth="1163.0" opacity="0.61" pickOnBounds="true">
+         <image>
+            <Image url="@../assets/1000_F_296423009_OFShyxV6Mz6jnyUVEePkwWBzZ4hXuAh9.jpg" />
+         </image>
+      </ImageView>
+      <Label prefHeight="45.0" prefWidth="1163.0" style="-fx-background-color: #c5b368;" text="   All Employee Salary " textFill="#141414">
+         <font>
+            <Font name="System Bold Italic" size="27.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnBack" layoutX="975.0" layoutY="588.0" mnemonicParsing="false" onAction="#btnBackOnAction" prefHeight="58.0" prefWidth="150.0" style="-fx-background-color: #55efc4; -fx-background-radius: 20;" text="Back">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tblEmployee" layoutX="5.0" layoutY="89.0" prefHeight="491.0" prefWidth="1132.0">
+         <columns>
+            <TableColumn fx:id="tblEmpId" prefWidth="146.0" text="Emp Id" />
+            <TableColumn fx:id="tblEmpName" prefWidth="255.0" text="Employee Name" />
+            <TableColumn fx:id="tblEmpAddress" prefWidth="211.40005493164062" text="Employee Address" />
+            <TableColumn fx:id="tblEmpAge" prefWidth="130.0" text="Age" />
+            <TableColumn fx:id="tblEmpTel" prefWidth="179.20001220703125" text="Tel" />
+            <TableColumn fx:id="tblEmpSalary" prefWidth="201.5999755859375" text="Emp Salary" />
+         </columns>
+      </TableView>
+      <Button fx:id="btnUpdate" layoutX="801.0" layoutY="588.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="57.0" prefWidth="150.0" style="-fx-background-color: #55efc4; -fx-background-radius: 20;" text="Update">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Button>
+      <Button layoutX="37.0" layoutY="609.0" mnemonicParsing="false" onAction="#btnPrintOnAction" prefHeight="45.0" prefWidth="259.0" style="-fx-background-color: #81ecec; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" text="Print All Train Report">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
