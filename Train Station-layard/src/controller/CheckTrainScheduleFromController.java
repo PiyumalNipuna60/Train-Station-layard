@@ -54,7 +54,7 @@ public class CheckTrainScheduleFromController {
         tblTrainStartStation.setCellValueFactory(new PropertyValueFactory("TrainStartStation"));
         tblTrainEndStation.setCellValueFactory(new PropertyValueFactory("TrainEndStation"));
 
-          //  loadAllTrain();
+            loadAllTrain();
     }
 
     public void btnSearchOnAction(ActionEvent actionEvent) {
@@ -88,24 +88,27 @@ public class CheckTrainScheduleFromController {
         ScheduleAnchorPane.getChildren().clear();
     }
 
-    private void loadAllTrain() throws SQLException, ClassNotFoundException {
-//        ResultSet result = CrudUtil.executeQuery("SELECT * FROM stationSchedule");
-//        ObservableList<TrainSchedulCheck> obList = FXCollections.observableArrayList();
-//        while (result.next()) {
-//            obList.add(
-//                    new TrainSchedulCheck(
-//                            result.getString("cusFrom"),
-//                            result.getString("cusTo"),
-//                            result.getString("TrainId"),
-//                            result.getString("TrainName"),
-//                            result.getString("StartStationTime"),
-//                            result.getString("EndStationTime"),
-//                            result.getString("TrainStopTime"),
-//                            result.getString("TrainStartStation"),
-//                            result.getString("TrainStopStation")
-//                    ));
-//        }
-//        tblTrainLoad.setItems(obList);
+    private void loadAllTrain(){
+
+        ArrayList<TrainSchedulCheckDTO> all = null;
+        try {
+            all = trainSchedulBO.getAll();
+            for (TrainSchedulCheckDTO trainSchedule :all) {
+                tblTrainLoad.getItems().add(new TrainSchedulCheckDTO(
+                        trainSchedule.getFrom(),
+                        trainSchedule.getTo(),
+                        trainSchedule.getTrainId(),
+                        trainSchedule.getTrainName(),
+                        trainSchedule.getStartTrainTime(),
+                        trainSchedule.getEndStationTime(),
+                        trainSchedule.getTrainStopTime(),
+                        trainSchedule.getTrainStartStation(),
+                        trainSchedule.getTrainEndStation()
+                ));
+            }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void uploadComboBox() {

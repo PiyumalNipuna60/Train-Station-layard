@@ -2,7 +2,6 @@ package dao.custom.impl;
 
 import dao.SqlUtil;
 import dao.custom.TrainSchedulDAO;
-import model.TrainDTO;
 import model.TrainSchedulCheckDTO;
 
 import java.sql.ResultSet;
@@ -12,7 +11,23 @@ import java.util.ArrayList;
 public class TrainSchedulDAOImpl implements TrainSchedulDAO {
     @Override
     public ArrayList<TrainSchedulCheckDTO> getAll() throws SQLException, ClassNotFoundException {
-        return null;
+        ResultSet resultSet = SqlUtil.executeQuery("SELECT * FROM stationSchedule");
+        ArrayList<TrainSchedulCheckDTO> AllSchedule = new ArrayList<>();
+        while (resultSet.next()) {
+            AllSchedule.add(
+                    new TrainSchedulCheckDTO(
+                            resultSet.getString(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3),
+                            resultSet.getString(4),
+                            resultSet.getString(5),
+                            resultSet.getString(6),
+                            resultSet.getString(7),
+                            resultSet.getString(8),
+                            resultSet.getString(9)
+                    ));
+        }
+        return AllSchedule;
     }
 
     @Override
@@ -46,10 +61,10 @@ public class TrainSchedulDAOImpl implements TrainSchedulDAO {
     }
 
     @Override
-    public  ArrayList<TrainSchedulCheckDTO> TrainSchedulCheck(String from,String to) throws SQLException, ClassNotFoundException {
+    public ArrayList<TrainSchedulCheckDTO> TrainSchedulCheck(String from, String to) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SqlUtil.executeQuery("SELECT * FROM  stationSchedule where cusFrom='" + from + "' && cusTo='" + to + "'");
         ArrayList<TrainSchedulCheckDTO> AllTrain = new ArrayList<>();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             AllTrain.add(
                     new TrainSchedulCheckDTO(
                             resultSet.getString(1),
