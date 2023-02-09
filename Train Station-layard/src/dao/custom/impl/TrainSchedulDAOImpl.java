@@ -2,6 +2,7 @@ package dao.custom.impl;
 
 import dao.SqlUtil;
 import dao.custom.TrainSchedulDAO;
+import model.TrainDTO;
 import model.TrainSchedulCheckDTO;
 
 import java.sql.ResultSet;
@@ -45,8 +46,24 @@ public class TrainSchedulDAOImpl implements TrainSchedulDAO {
     }
 
     @Override
-    public ResultSet TrainSchedulCheck(String from,String to) throws SQLException, ClassNotFoundException {
+    public  ArrayList<TrainSchedulCheckDTO> TrainSchedulCheck(String from,String to) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SqlUtil.executeQuery("SELECT * FROM  stationSchedule where cusFrom='" + from + "' && cusTo='" + to + "'");
-        return resultSet;
+        ArrayList<TrainSchedulCheckDTO> AllTrain = new ArrayList<>();
+        while (resultSet.next()){
+            AllTrain.add(
+                    new TrainSchedulCheckDTO(
+                            resultSet.getString(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3),
+                            resultSet.getString(4),
+                            resultSet.getString(5),
+                            resultSet.getString(6),
+                            resultSet.getString(7),
+                            resultSet.getString(8),
+                            resultSet.getString(9)
+                    )
+            );
+        }
+        return AllTrain;
     }
 }

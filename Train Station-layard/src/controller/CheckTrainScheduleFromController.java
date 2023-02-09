@@ -8,13 +8,11 @@ import db.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import model.StationDTO;
+import model.TrainSchedulCheckDTO;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -60,42 +58,30 @@ public class CheckTrainScheduleFromController {
     }
 
     public void btnSearchOnAction(ActionEvent actionEvent) {
+        tblTrainLoad.getItems().clear();
         String from = (String) cmbTrainFrom.getValue();
         String to = (String) cmbTrainTo.getValue();
 
         try {
-            ResultSet resultSet = trainSchedulBO.TrainSchedulCheck(from, to);
-            System.out.println(resultSet.getString(1)+" "+resultSet.getString(2));
+            ArrayList<TrainSchedulCheckDTO> trainSchedul = trainSchedulBO.TrainSchedulCheck(from, to);
+            for (TrainSchedulCheckDTO train :trainSchedul) {
+                tblTrainLoad.getItems().add(
+                  new TrainSchedulCheckDTO(
+                          train.getFrom(),
+                          train.getTo(),
+                          train.getTrainId(),
+                          train.getTrainName(),
+                          train.getStartTrainTime(),
+                          train.getEndStationTime(),
+                          train.getTrainStopTime(),
+                          train.getTrainStartStation(),
+                          train.getTrainEndStation()
+                  ));
+            }
+
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
-
-//        try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/TrainStationProject", "root", "1234");
-//            String sql = "SELECT * FROM  stationSchedule where cusFrom='" + cmbTrainFrom.getValue() + "' && cusTo='" + cmbTrainTo.getValue() + "'";
-//            Statement statement = con.createStatement();
-//            ResultSet result = statement.executeQuery(sql);
-//            ObservableList<TrainSchedulCheck> obList1 = FXCollections.observableArrayList();
-//            while (result.next()) {
-//                obList1.add(
-//                        new TrainSchedulCheck(
-//                                result.getString("cusFrom"),
-//                                result.getString("cusTo"),
-//                                result.getString("TrainId"),
-//                                result.getString("TrainName"),
-//                                result.getString("StartStationTime"),
-//                                result.getString("EndStationTime"),
-//                                result.getString("TrainStopTime"),
-//                                result.getString("TrainStartStation"),
-//                                result.getString("TrainStopStation")
-//                        ));
-//            }
-//            tblTrainLoad.setItems(obList1);
-//
-//        } catch (SQLException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
     }
 
     public void btnBackOnAction(ActionEvent actionEvent) {

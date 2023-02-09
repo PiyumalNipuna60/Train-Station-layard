@@ -23,6 +23,6 @@ public interface TrainSchedulBO extends SuperBO {
 
     public String generateNewId() throws SQLException, ClassNotFoundException ;
 
-    public ResultSet TrainSchedulCheck(String from, String to) throws SQLException, ClassNotFoundException;
+    public ArrayList<TrainSchedulCheckDTO> TrainSchedulCheck(String from, String to) throws SQLException, ClassNotFoundException;
 
 }

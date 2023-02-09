@@ -51,7 +51,7 @@ public class TrainSchedulBOImpl implements TrainSchedulBO {
     }
 
     @Override
-    public ResultSet TrainSchedulCheck(String from, String to) throws SQLException, ClassNotFoundException {
+    public ArrayList<TrainSchedulCheckDTO> TrainSchedulCheck(String from, String to) throws SQLException, ClassNotFoundException {
         return trainSchedulDAO.TrainSchedulCheck(from,to);
     }
 }
