@@ -13,7 +13,7 @@ public class AppInitializer extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(this.getClass().getResource("/views/ModifyTrainFrom.fxml"));
+        Parent root = FXMLLoader.load(this.getClass().getResource("/views/LoginDashBordForm.fxml"));
         Scene mainScene = new Scene(root);
         primaryStage.setScene(mainScene);
         primaryStage.setTitle("Java FX POS");

@@ -47,7 +47,6 @@ public class ModifyTrainFromController {
     LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
 
     public void initialize() {
-
         trainFrom();
         trainTo();
 
