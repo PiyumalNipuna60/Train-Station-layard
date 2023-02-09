@@ -56,6 +56,9 @@
             <TableColumn fx:id="tblTrainStartStation" prefWidth="140.0" text="Train Start Station" />
             <TableColumn fx:id="tblTrainEndStation" prefWidth="127.20013427734375" text="Train End Station" />
         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
       <Button fx:id="btnBack" layoutX="957.0" layoutY="131.0" mnemonicParsing="false" onAction="#btnBackOnAction" prefHeight="45.0" prefWidth="150.0" style="-fx-background-color: black; -fx-background-radius: 20; -fx-border-color: BLACK; -fx-border-radius: 20;" text="Back" textFill="#eae9e4">
          <font>
