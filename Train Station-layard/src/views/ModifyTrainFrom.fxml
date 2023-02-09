@@ -11,15 +11,17 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="trainAnchorPane" prefHeight="656.0" prefWidth="1163.0" style="-fx-border-radius: 10px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyTrainFromController">
+<AnchorPane fx:id="trainAnchorPane" prefHeight="656.0" prefWidth="1163.0" style="-fx-border-radius: 10px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyTrainFromController">
    <children>
       <ImageView fitHeight="620.0" fitWidth="1163.0" layoutY="37.0" opacity="0.71" pickOnBounds="true">
          <image>
             <Image url="@../assets/gallery-1.jpeg" />
          </image>
       </ImageView>
+      <Pane layoutX="15.0" layoutY="54.0" opacity="0.6" prefHeight="218.0" prefWidth="1122.0" style="-fx-background-color: Gray; -fx-background-radius: 15; -fx-border-radius: 15;" />
       <Button fx:id="btnUpdateTrain" layoutX="781.0" layoutY="69.0" mnemonicParsing="false" onAction="#btnUpdateTrainOnAction" prefHeight="57.0" prefWidth="150.0" style="-fx-background-color: #55efc4; -fx-background-radius: 15;" text="Update Train" />
       <Label prefHeight="45.0" prefWidth="1163.0" style="-fx-background-color: #c5b368;" text="   Modify Train" textFill="#141414">
          <font>
@@ -56,7 +58,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="488.0" layoutY="98.0" prefHeight="30.0" prefWidth="73.0" style="-fx-background-color: #b2bec3; -fx-background-radius: 5;" text="From   :">
+      <Label layoutX="488.0" layoutY="98.0" prefHeight="30.0" prefWidth="73.0" style="-fx-background-color: #b2bec3; -fx-background-radius: 5;" text="From   :" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -80,15 +82,15 @@
             </Label>
          </children>
       </AnchorPane>
-      <Separator layoutX="60.0" layoutY="274.0" prefHeight="0.0" prefWidth="1066.0" />
+      <Separator layoutX="26.0" layoutY="283.0" prefHeight="6.0" prefWidth="1099.0" style="-fx-background-color: red; -fx-border-color: red;" />
       <TableView fx:id="tblAllTrain" layoutX="26.0" layoutY="299.0" prefHeight="340.0" prefWidth="1112.0">
          <columns>
             <TableColumn fx:id="colTrainTo" prefWidth="221.0" text="To" />
             <TableColumn fx:id="colTrainFrom" prefWidth="208.0" text="From" />
             <TableColumn fx:id="colTrainId" prefWidth="167.0" text="Train Id" />
-            <TableColumn fx:id="colTrainName" prefWidth="209.0" text="Train Name" />
-            <TableColumn fx:id="colTrainStartTime" prefWidth="161.0" text="Start Time" />
-            <TableColumn fx:id="colTrainEndTime" prefWidth="145.0" text="End Time" />
+            <TableColumn fx:id="colTrainName" prefWidth="194.5999755859375" text="Train Name" />
+            <TableColumn fx:id="colTrainStartTime" prefWidth="150.20001220703125" text="Start Time" />
+            <TableColumn fx:id="colTrainEndTime" prefWidth="159.7999267578125" text="End Time" />
          </columns>
       </TableView>
       <Button layoutX="963.0" layoutY="148.0" mnemonicParsing="false" onAction="#btnEmployeeReportOnAction" prefHeight="57.0" prefWidth="163.0" style="-fx-background-color: #55efc4; -fx-background-radius: 20;" text="Get Report">

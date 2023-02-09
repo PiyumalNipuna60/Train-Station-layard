@@ -43,12 +43,12 @@ public class TrainDAOImpl implements TrainDAO {
     @Override
     public boolean update(TrainDTO dto) throws SQLException, ClassNotFoundException {
         return SqlUtil.executeUpdate("update train set trainName=?,startTime=?,EndTime=?,trainFrom=?,trainTo=? where trainId=?",
-                dto.getTrainId(),
                 dto.getTrainName(),
                 dto.getStartTime(),
                 dto.getEndTime(),
                 dto.getTrainFrom(),
-                dto.getTrainTo()
+                dto.getTrainTo(),
+                dto.getTrainId()
                 );
     }
 

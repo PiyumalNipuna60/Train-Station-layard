@@ -8,8 +8,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import model.StationDTO;
 import model.TrainDTO;
 import net.sf.jasperreports.engine.*;
@@ -17,23 +17,26 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.regex.Pattern;
 
-public class AddTrainFromController {
+public class ModifyTrainFromController {
     private final TrainBO trainBO = (TrainBO) BOFactory.getBoFactory().getBOType(BOFactory.BoType.TRAIN);
     private final StationBO stationBO = (StationBO) BOFactory.getBoFactory().getBOType(BOFactory.BoType.STATION);
+    public Button btnRemoveTrain1;
     public Button btnBack;
     public ComboBox cmbTrainTo;
     public ComboBox cmbTrainFrom;
     public TextField txtTrainId;
     public TextField txtTrainName;
-    public Button btnAddTrain;
+    public Button btnUpdateTrain;
     public TextField txtStartTime;
     public TextField txtEndTime;
+    public AnchorPane trainAnchorPane;
     public TableView tblAllTrain;
     public TableColumn colTrainTo;
     public TableColumn colTrainFrom;
@@ -48,7 +51,8 @@ public class AddTrainFromController {
         trainFrom();
         trainTo();
 
-        btnAddTrain.setDisable(true);
+        btnUpdateTrain.setDisable(true);
+        btnRemoveTrain1.setDisable(true);
 
         Pattern pattenId = Pattern.compile("^(T00-)[0-9]{3,5}$");
         Pattern pattenName = Pattern.compile("^[A-z ]{3,}$");
@@ -67,16 +71,14 @@ public class AddTrainFromController {
         colTrainFrom.setCellValueFactory(new PropertyValueFactory("trainFrom"));
         colTrainTo.setCellValueFactory(new PropertyValueFactory("trainTo"));
 
-
         loadAllTrain();
     }
 
     private void loadAllTrain() {
+        tblAllTrain.getItems().clear();
         try {
-            tblAllTrain.getItems().clear();
-            ArrayList<TrainDTO> all = trainBO.getAllTrain();
-
-            for (TrainDTO train : all) {
+            ArrayList<TrainDTO> allTrain = trainBO.getAllTrain();
+            for (TrainDTO train :allTrain) {
                 tblAllTrain.getItems().add(
                         new TrainDTO(
                                 train.getTrainId(),
@@ -87,32 +89,94 @@ public class AddTrainFromController {
                                 train.getTrainTo()
                         ));
             }
-
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public void textFields_Key_Released(KeyEvent keyEvent) throws SQLException, ClassNotFoundException {
-        Validation();
 
-        if (keyEvent.getCode() == KeyCode.ENTER) {
-            Object responds = Validation();
+    public void btnUpdateTrainOnAction() {
 
-            if (responds instanceof TextField) {
-                TextField textField = (TextField) responds;
-                textField.requestFocus();
+        try {
+            boolean b = trainBO.updateTrain(new TrainDTO(
+                    txtTrainId.getText(),
+                    txtTrainName.getText(),
+                    txtStartTime.getText(),
+                    txtEndTime.getText(),
+                    cmbTrainFrom.getValue(),
+                    cmbTrainTo.getValue()));
+            if (b){
+                new Alert(Alert.AlertType.CONFIRMATION, "Updated!").show();
+                loadAllTrain();
+                clear();
             } else {
-                boolean exist = trainBO.existTrain(txtTrainId.getText());
-                if (exist) {
-
-                } else {
-                    btnAddTrainOnAction();
-                }
+                new Alert(Alert.AlertType.WARNING, "Try Again!").show();
+                loadAllTrain();
+                clear();
             }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        btnUpdateTrain.setDisable(true);
+        btnRemoveTrain1.setDisable(true);
+    }
+
+    public void btnRemoveTrainOnAction(ActionEvent actionEvent) {
+
+        try {
+            boolean b = trainBO.deleteTrain(txtTrainId.getText());
+            if (b){
+                new Alert(Alert.AlertType.CONFIRMATION, "Deleted!").show();
+                loadAllTrain();
+                clear();
+            } else {
+                new Alert(Alert.AlertType.WARNING, "Try Again!").show();
+                loadAllTrain();
+                clear();
+            }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        btnUpdateTrain.setDisable(true);
+        btnRemoveTrain1.setDisable(true);
+    }
+
+    public void txtSearchOnAction(ActionEvent actionEvent) {
+        tblAllTrain.getItems().clear();
+        try {
+            TrainDTO trainDTO = trainBO.searchTrain(txtTrainId.getText());
+            if (trainDTO != null) {
+                txtTrainName.setText(trainDTO.getTrainName());
+                txtEndTime.setText(trainDTO.getEndTime());
+                txtStartTime.setText(trainDTO.getStartTime());
+                cmbTrainTo.setValue(trainDTO.getTrainTo());
+                cmbTrainFrom.setValue(trainDTO.getTrainFrom());
+
+                tblAllTrain.getItems().add(
+                        new TrainDTO(
+                                trainDTO.getTrainId(),
+                                trainDTO.getTrainName(),
+                                trainDTO.getStartTime(),
+                                trainDTO.getEndTime(),
+                                trainDTO.getTrainFrom(),
+                                trainDTO.getTrainTo()
+                        ));
+            } else {
+                new Alert(Alert.AlertType.WARNING, "Empty Result").show();
+                loadAllTrain();
+            }
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
         }
     }
 
+    public void btnBackOnAction(ActionEvent actionEvent) throws IOException {
+        trainAnchorPane.getChildren().clear();
+    }
+
+    public void textFields_Key_Releaseed(KeyEvent keyEvent) {
+        Validation();
+    }
 
     private Object Validation() {
         for (TextField key : map.keySet()) {
@@ -128,41 +192,15 @@ public class AddTrainFromController {
 
     private void removeError(TextField text) {
         text.getParent().setStyle("-fx-border-color: green");
-        btnAddTrain.setDisable(false);
+        btnUpdateTrain.setDisable(false);
+        btnRemoveTrain1.setDisable(false);
     }
 
     private void addError(TextField text) {
         if (text.getText().length() > 0) {
             text.getParent().setStyle("-fx-border-color: red");
         }
-        btnAddTrain.setDisable(true);
-    }
-
-    public void btnAddTrainOnAction() {
-        try {
-            boolean exist = trainBO.existTrain(txtTrainId.getText());
-            if (exist) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Duplicate Train ID..!").show();
-            } else {
-                boolean save = trainBO.SaveTrain(new TrainDTO(
-                        txtTrainId.getText(),
-                        txtTrainName.getText(),
-                        txtStartTime.getText(),
-                        txtEndTime.getText(),
-                        cmbTrainFrom.getValue(),
-                        cmbTrainTo.getValue()
-                ));
-                if (save) {
-                    new Alert(Alert.AlertType.CONFIRMATION, "Add New Train..!").show();
-                    loadAllTrain();
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Something Wrong..!").show();
-                }
-            }
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
-        }
-        btnAddTrain.setDisable(true);
+        btnUpdateTrain.setDisable(true);
     }
 
     public void trainFrom() {
@@ -198,24 +236,7 @@ public class AddTrainFromController {
         txtStartTime.clear();
         cmbTrainFrom.getSelectionModel().clearSelection();
         cmbTrainTo.getSelectionModel().clearSelection();
-    }
-
-    public void txtSearchOnAction(ActionEvent actionEvent) {
-        try {
-            TrainDTO search = trainBO.searchTrain(txtTrainId.getText());
-            if (search != null) {
-                txtTrainName.setText(search.getTrainName());
-                txtStartTime.setText(search.getStartTime());
-                txtEndTime.setText(search.getEndTime());
-                cmbTrainFrom.setValue(search.getTrainFrom());
-                cmbTrainTo.setValue(search.getTrainTo());
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Empty Result..!").show();
-            }
-
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
-        }
+        loadAllTrain();
     }
 
     public void btnclearOnAction(ActionEvent actionEvent) {
