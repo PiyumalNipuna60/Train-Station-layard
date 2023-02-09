@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Blend?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="686.0" prefWidth="1163.0" style="-fx-border-radius: 10px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyBookingCustomerFromController">
+<AnchorPane prefHeight="686.0" prefWidth="1163.0" style="-fx-border-radius: 10px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyBookingCustomerFromController">
    <children>
+      <Pane layoutX="19.0" layoutY="53.0" prefHeight="311.0" prefWidth="1131.0" style="-fx-background-color: Gray; -fx-background-radius: 15;" />
       <Label prefHeight="45.0" prefWidth="1163.0" style="-fx-background-color: #c5b368;" text="   Modify Booking Train" textFill="#141414">
          <font>
             <Font name="System Bold Italic" size="24.0" />
@@ -25,7 +19,6 @@
             <Image url="@../assets/sideways-woman-listening-music-train-platform.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="btnModifyBooking" layoutX="839.0" layoutY="302.0" mnemonicParsing="false" onAction="#btnModifyBookingOnAction" prefHeight="57.0" prefWidth="150.0" style="-fx-background-color: #55efc4; -fx-background-radius: 20;" text="Update Booking" />
       <AnchorPane layoutX="34.0" layoutY="76.0" prefHeight="37.0" prefWidth="415.0" style="-fx-border-color: black; -fx-background-color: #ffffff; -fx-border-radius: 20; -fx-background-radius: 20;">
          <children>
             <TextField fx:id="txtCusId" layoutY="4.0" onAction="#txtSearchOnAction" onKeyReleased="#textFields_Key_Releaseed" prefHeight="33.0" prefWidth="415.0" promptText="C00-001" style="-fx-border-color: white; -fx-background-color: white; -fx-border-radius: 20px; -fx-background-radius: 20;" />
@@ -100,7 +93,6 @@
          </font>
       </Label>
       <ComboBox fx:id="cmbCusSeatNo" editable="true" layoutX="618.0" layoutY="209.0" prefWidth="150.0" promptText="    -SELECT-" visibleRowCount="5" />
-      <Button fx:id="btnDeleteBooking" layoutX="839.0" layoutY="217.0" mnemonicParsing="false" onAction="#btnDeleteBookingOnAction" prefHeight="57.0" prefWidth="150.0" style="-fx-background-color: #55efc4; -fx-background-radius: 20;" text="Delete Booking" />
       <Label layoutX="827.0" layoutY="70.0" prefHeight="25.0" prefWidth="64.0" text="Time   :">
          <font>
             <Font size="16.0" />
@@ -113,7 +105,7 @@
          </font>
       </Label>
       <ComboBox fx:id="cmbCusClass" editable="true" layoutX="618.0" layoutY="260.0" prefWidth="150.0" promptText="    -SELECT-" visibleRowCount="3" />
-      <Separator layoutX="23.0" layoutY="380.0" prefHeight="0.0" prefWidth="1118.0" />
+      <Separator layoutX="23.0" layoutY="380.0" prefHeight="0.0" prefWidth="1118.0" style="-fx-background-color: red;" />
       <TableView fx:id="tblCustomerBooking" layoutX="13.0" layoutY="396.0" prefHeight="265.0" prefWidth="1139.0">
          <columns>
             <TableColumn fx:id="colCusId" prefWidth="73.0" text="Cus Id" />
@@ -122,12 +114,12 @@
             <TableColumn fx:id="colCusTel" prefWidth="97.0" text="Tel" />
             <TableColumn fx:id="colCusFrom" prefWidth="116.0" text="From" />
             <TableColumn fx:id="colCusTo" prefWidth="111.0" text="To" />
-            <TableColumn fx:id="colCusTime" prefWidth="90.0" text="Time" />
-            <TableColumn fx:id="colCusTrain" prefWidth="119.0" text="Train" />
-            <TableColumn fx:id="colCusSeatNo" prefWidth="74.0" text="Seat No" />
-            <TableColumn fx:id="colCusClass" prefWidth="66.0" text="Class" />
-            <TableColumn fx:id="colCusPrice" prefWidth="84.0" text="price" />
-            <TableColumn fx:id="colCusDate" prefWidth="99.0" text="Date" />
+            <TableColumn fx:id="colCusTime" prefWidth="66.4000244140625" text="Time" />
+            <TableColumn fx:id="colCusTrain" prefWidth="113.0" text="Train" />
+            <TableColumn fx:id="colCusSeatNo" prefWidth="86.5999755859375" text="Seat No" />
+            <TableColumn fx:id="colCusClass" prefWidth="65.5999755859375" text="Class" />
+            <TableColumn fx:id="colCusPrice" text="price" />
+            <TableColumn fx:id="colCusDate" prefWidth="106.199951171875" text="Date" />
          </columns>
       </TableView>
       <AnchorPane layoutX="35.0" layoutY="316.0" prefHeight="37.0" prefWidth="415.0" style="-fx-border-color: black; -fx-background-color: #ffffff; -fx-border-radius: 20; -fx-background-radius: 20;">
@@ -141,6 +133,8 @@
          </children>
       </AnchorPane>
       <Button layoutX="1068.0" layoutY="303.0" mnemonicParsing="false" onAction="#btnClearOnAction" prefHeight="45.0" prefWidth="57.0" style="-fx-background-color: #81ecec; -fx-background-radius: 20;" text="Clear" />
-      <Button layoutX="1013.0" layoutY="218.0" mnemonicParsing="false" onAction="#btnPrintOnAction" prefHeight="45.0" prefWidth="141.0" style="-fx-background-color: #81ecec; -fx-background-radius: 20;" text="Print" />
+      <Button layoutX="1013.0" layoutY="218.0" mnemonicParsing="false" onAction="#btnPrintOnAction" prefHeight="46.0" prefWidth="126.0" style="-fx-background-color: #81ecec; -fx-background-radius: 20;" text="Print" />
+      <Button fx:id="btnDeleteBooking" layoutX="839.0" layoutY="217.0" mnemonicParsing="false" onAction="#btnDeleteBookingOnAction" prefHeight="57.0" prefWidth="150.0" style="-fx-background-color: #55efc4; -fx-background-radius: 20;" text="Delete Booking" />
+      <Button fx:id="btnModifyBooking" layoutX="839.0" layoutY="293.0" mnemonicParsing="false" onAction="#btnModifyBookingOnAction" prefHeight="57.0" prefWidth="150.0" style="-fx-background-color: #55efc4; -fx-background-radius: 20;" text="Update Booking" />
    </children>
 </AnchorPane>

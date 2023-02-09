@@ -106,7 +106,7 @@ public class BookingCustomerDTO {
     }
 
     public String getTrainClass() {
-        return trainClass;
+        return this.trainClass;
     }
 
     public void setTrainClass(String trainClass) {

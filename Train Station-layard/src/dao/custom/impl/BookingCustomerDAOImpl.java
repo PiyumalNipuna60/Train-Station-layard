@@ -59,7 +59,7 @@ public class BookingCustomerDAOImpl implements BookingCustomerDAO {
                 dto.getTime(),
                 dto.getTrain(),
                 dto.getSeatNo(),
-                dto.getClass(),
+                dto.getTrainClass(),
                 dto.getPrice(),
                 dto.getDate(),
                 dto.getId());

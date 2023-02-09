@@ -2,16 +2,13 @@ package controller;
 
 import bo.BOFactory;
 import bo.custom.BookingCustomerBO;
-import dao.custom.StationDAO;
-import dao.custom.TrainDAO;
-import dao.custom.impl.StationDAOImpl;
-import dao.custom.impl.TrainDAOImpl;
+import bo.custom.StationBO;
+import bo.custom.TrainBO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import model.BookingCustomerDTO;
 import model.StationDTO;
@@ -27,14 +24,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.regex.Pattern;
 
+public class ModifyBookingCustomerFromController {
 
-public class AddBookingCustomerFromController {
-    private final TrainDAO trainDAO = new TrainDAOImpl();
-    private final StationDAO stationDAO = new StationDAOImpl();
 
     private final BookingCustomerBO bookingCustomerBO = (BookingCustomerBO) BOFactory.getBoFactory().getBOType(BOFactory.BoType.BOOKING_CUSTOMER);
-
-    public Button btnBooking;
+    private final StationBO stationBO = (StationBO) BOFactory.getBoFactory().getBOType(BOFactory.BoType.STATION);
+    private final TrainBO trainBO = (TrainBO) BOFactory.getBoFactory().getBOType(BOFactory.BoType.TRAIN);
+    public Button btnModifyBooking;
     public TextField txtCusName;
     public TextField txtCusId;
     public TextField txtCusAddress;
@@ -44,27 +40,30 @@ public class AddBookingCustomerFromController {
     public ComboBox cmbCusTrain;
     public TextField txtCusPrice;
     public ComboBox cmbCusSeatNo;
+    public Button btnDeleteBooking;
     public TextField txtTrainTime;
     public ComboBox cmbCusClass;
     public TableView tblCustomerBooking;
     public TableColumn colCusId;
     public TableColumn colCusName;
     public TableColumn colCusAddress;
-    public TableColumn colCusTel;
     public TableColumn colCusFrom;
+    public TableColumn colCusTel;
     public TableColumn colCusTo;
     public TableColumn colCusTime;
     public TableColumn colCusTrain;
     public TableColumn colCusSeatNo;
     public TableColumn colCusClass;
     public TableColumn colCusPrice;
-    public TextField txtCusBookDate;
-    public TableColumn colDate;
+    public TableColumn colCusDate;
+    public TextField txtDate;
     LinkedHashMap<TextField, Pattern> map = new LinkedHashMap<>();
+
 
     public void initialize() {
         uploadComboBox();
-        btnBooking.setDisable(true);
+        btnModifyBooking.setDisable(true);
+        btnDeleteBooking.setDisable(true);
 
         Pattern patternId = Pattern.compile("^(C00-)[0-9]{3,5}$");
         Pattern patternName = Pattern.compile("^[A-z ]{3,}$");
@@ -89,33 +88,16 @@ public class AddBookingCustomerFromController {
         colCusTime.setCellValueFactory(new PropertyValueFactory("time"));
         colCusTrain.setCellValueFactory(new PropertyValueFactory("train"));
         colCusSeatNo.setCellValueFactory(new PropertyValueFactory("seatNo"));
-        colCusClass.setCellValueFactory(new PropertyValueFactory("class"));
+        colCusClass.setCellValueFactory(new PropertyValueFactory("trainClass"));
         colCusPrice.setCellValueFactory(new PropertyValueFactory("price"));
-        colDate.setCellValueFactory(new PropertyValueFactory("date"));
-
+        colCusDate.setCellValueFactory(new PropertyValueFactory("date"));
 
         loadAllBooking();
     }
 
-    public void textFields_Key_Releaseed(KeyEvent keyEvent) throws SQLException, ClassNotFoundException {
+    public void textFields_Key_Releaseed(KeyEvent keyEvent) {
         validate();
 
-        if (keyEvent.getCode() == KeyCode.ENTER) {
-            Object responds = validate();
-
-            if (responds instanceof TextField) {
-                TextField textField = (TextField) responds;
-                textField.requestFocus();
-            } else {
-                //========================
-                boolean exist = bookingCustomerBO.existCustomerBooking(txtCusId.getText());
-                if (exist) {
-
-                } else {
-                    btnBookingOnAction();
-                }
-            }
-        }
     }
 
     private Object validate() {
@@ -132,54 +114,106 @@ public class AddBookingCustomerFromController {
 
     public void removeError(TextField text) {
         text.getParent().setStyle("-fx-border-color: green");
-        btnBooking.setDisable(false);
+        btnModifyBooking.setDisable(false);
     }
 
     public void addError(TextField text) {
         if (text.getText().length() > 0) {
             text.getParent().setStyle("-fx-border-color: red");
         }
-        btnBooking.setDisable(true);
+        btnModifyBooking.setDisable(true);
     }
 
-
-    public void btnBookingOnAction() {
+    public void txtSearchOnAction(ActionEvent actionEvent) {
+        tblCustomerBooking.getItems().clear();
         try {
-            String customerID = txtCusId.getText();
-            String customerName = txtCusName.getText();
-            String customerAddress = txtCusAddress.getText();
-            String customerContact = txtCusContact.getText();
-            Object trainFrom = cmbCusFrom.getValue();
-            Object trainTo = cmbCusTo.getValue();
-            String time = txtTrainTime.getText();
-            Object train = cmbCusTrain.getValue();
-            Object seatNo = cmbCusSeatNo.getValue();
-            Object trainClass = cmbCusClass.getValue();
-            String price = txtCusPrice.getText();
-            String date = txtCusBookDate.getText();
+            BookingCustomerDTO search = bookingCustomerBO.searchCustomerBook(txtCusId.getText());
+            if (search != null) {
+                txtCusId.setText(search.getId());
+                txtCusName.setText(search.getName());
+                txtCusAddress.setText(search.getAddress());
+                txtCusContact.setText(search.getContact());
+                txtTrainTime.setText(search.getTime());
+                txtCusPrice.setText(search.getPrice());
+                cmbCusFrom.setValue(search.getTrainFrom());
+                cmbCusTo.setValue(search.getTrainTo());
+                cmbCusTrain.setValue(search.getTrain());
+                cmbCusSeatNo.setValue(search.getSeatNo());
+                cmbCusClass.setValue(search.getTrainClass());
+                txtDate.setText(search.getDate());
 
-            boolean exist = bookingCustomerBO.existCustomerBooking(customerID);
-            if (exist) {
-                new Alert(Alert.AlertType.ERROR, "All Ready Add ID!").show();
+                tblCustomerBooking.getItems().add(
+                        new BookingCustomerDTO(
+                                search.getId(),
+                                search.getName(),
+                                search.getAddress(),
+                                search.getContact(),
+                                search.getTrainFrom(),
+                                search.getTrainTo(),
+                                search.getTime(),
+                                search.getTrain(),
+                                search.getSeatNo(),
+                                search.getTrainClass(),
+                                search.getPrice(),
+                                search.getDate()
+                        ));
             } else {
-                btnBooking.setVisible(true);
-                boolean save = bookingCustomerBO.saveCustomerBooking(new BookingCustomerDTO(customerID, customerName, customerAddress,
-                        customerContact, trainFrom, trainTo, time, train, seatNo, trainClass, price, date));
-                if (save) {
-                    new Alert(Alert.AlertType.CONFIRMATION, "Save Booking !").show();
-                    loadAllBooking();
-                    clear();
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Something Wrong !").show();
-                }
+                new Alert(Alert.AlertType.ERROR, "Empty Result..!").show();
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        btnDeleteBooking.setDisable(false);
+        btnModifyBooking.setDisable(false);
+    }
+
+    public void btnModifyBookingOnAction() {
+        String customerID = txtCusId.getText();
+        String customerName = txtCusName.getText();
+        String customerAddress = txtCusAddress.getText();
+        String customerContact = txtCusContact.getText();
+        Object trainFrom = cmbCusFrom.getValue();
+        Object trainTo = cmbCusTo.getValue();
+        String time = txtTrainTime.getText();
+        Object train = cmbCusTrain.getValue();
+        Object seatNo = cmbCusSeatNo.getValue();
+        Object trainClass = cmbCusClass.getValue();
+        String price = txtCusPrice.getText();
+        String date = txtDate.getText();
+
+        try {
+            boolean save = bookingCustomerBO.updateCustomerBooking(new BookingCustomerDTO(customerID, customerName, customerAddress,
+                    customerContact, trainFrom, trainTo, time, train, seatNo, trainClass, price, date));
+            if (save) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Update Booking !").show();
+                loadAllBooking();
+                clear();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something Wrong !").show();
+                loadAllBooking();
             }
         } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
+            System.out.println("hy");
+            System.out.println(throwables);
+        }
+
+    }
+
+    public void btnDeleteBookingOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        boolean b = bookingCustomerBO.deleteCustomerBooking(txtCusId.getText());
+        if (b) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Delete CustomerBooking..!").show();
+            loadAllBooking();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Something Wrong..!").show();
+            loadAllBooking();
         }
     }
 
     public void btnClearOnAction(ActionEvent actionEvent) {
         clear();
+        loadAllBooking();
     }
 
     public void btnPrintOnAction(ActionEvent actionEvent) {
@@ -212,9 +246,9 @@ public class AddBookingCustomerFromController {
         try {
             JasperDesign load = JRXmlLoader.load(this.getClass().getResourceAsStream("/views/reports/BookingReport.jrxml"));
             JasperReport compileReport = JasperCompileManager.compileReport(load);
+            //  JasperReport compileReport= (JasperReport) JRLoader.loadObject(this.getClass().getResource("/view/reports/BookingReport.jasper"));
             JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, map, new JREmptyDataSource(1));
             JasperViewer.viewReport(jasperPrint, false);
-
 
         } catch (JRException e) {
             e.printStackTrace();
@@ -222,34 +256,37 @@ public class AddBookingCustomerFromController {
     }
 
     public void uploadComboBox() {
+        comboFrom();
+        comboTo();
+        comboTrain();
+        comboSeatNo();
+        comboClass();
+    }
+
+    public void comboFrom() {
         try {
-            comboFrom();
-            comboTo();
-            comboTrain();
-            comboSeatNo();
-            comboClass();
+            ArrayList<StationDTO> all = stationBO.getAllStation();
+            ObservableList<Object> obList = FXCollections.observableArrayList();
+            for (StationDTO station : all) {
+                obList.add(new String(station.getName()));
+            }
+            cmbCusTo.setItems(obList);
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
-    public void comboFrom() throws SQLException, ClassNotFoundException {
-        ArrayList<StationDTO> all = stationDAO.getAll();
-        ObservableList obList = FXCollections.observableArrayList();
-        for (StationDTO station : all) {
-            obList.add(new String(station.getName()));
+    public void comboTo() {
+        try {
+            ArrayList<StationDTO> all = stationBO.getAllStation();
+            ObservableList<Object> obList = FXCollections.observableArrayList();
+            for (StationDTO station : all) {
+                obList.add(new String(station.getName()));
+            }
+            cmbCusTo.setItems(obList);
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
         }
-        cmbCusFrom.setItems(obList);
-    }
-
-    public void comboTo() throws SQLException, ClassNotFoundException {
-        ArrayList<StationDTO> all = stationDAO.getAll();
-        ObservableList<Object> obList = FXCollections.observableArrayList();
-        for (StationDTO station : all) {
-            obList.add(new String(station.getName()));
-        }
-        cmbCusTo.setItems(obList);
     }
 
     //from to train search karanna one
@@ -268,7 +305,7 @@ public class AddBookingCustomerFromController {
 
             } else {
                 cmbCusTrain.getItems().clear();
-                ArrayList<TrainDTO> all = trainDAO.getAll();
+                ArrayList<TrainDTO> all = trainBO.getAllTrain();
                 ObservableList obList = FXCollections.observableArrayList();
                 for (TrainDTO dto : all) {
                     obList.add(new String(dto.getTrainName()));
@@ -304,8 +341,8 @@ public class AddBookingCustomerFromController {
     private void loadAllBooking() {
         tblCustomerBooking.getItems().clear();
         try {
-            ArrayList<BookingCustomerDTO> all = bookingCustomerBO.getAllCustomerBooking();
-            for (BookingCustomerDTO dto : all) {
+            ArrayList<BookingCustomerDTO> allCustomerBooking = bookingCustomerBO.getAllCustomerBooking();
+            for (BookingCustomerDTO dto : allCustomerBooking) {
                 tblCustomerBooking.getItems().add(
                         new BookingCustomerDTO(
                                 dto.getId(),
@@ -319,14 +356,13 @@ public class AddBookingCustomerFromController {
                                 dto.getSeatNo(),
                                 dto.getTrainClass(),
                                 dto.getPrice(),
-                                dto.getDate()));
-
+                                dto.getDate()
+                        ));
             }
-        } catch (SQLException | ClassNotFoundException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
         }
-
-
     }
 
     public void clear() {
@@ -334,47 +370,15 @@ public class AddBookingCustomerFromController {
         txtCusName.clear();
         txtCusAddress.clear();
         txtCusContact.clear();
-        txtTrainTime.clear();
-        txtCusPrice.clear();
         cmbCusFrom.getSelectionModel().clearSelection();
         cmbCusTo.getSelectionModel().clearSelection();
+        txtTrainTime.clear();
         cmbCusTrain.getSelectionModel().clearSelection();
         cmbCusSeatNo.getSelectionModel().clearSelection();
         cmbCusClass.getSelectionModel().clearSelection();
-        txtCusBookDate.clear();
-    }
-
-    public void txtSearchOnAction(ActionEvent actionEvent) {
-
-        try {
-            BookingCustomerDTO search = bookingCustomerBO.searchCustomerBook(txtCusId.getText());
-            if (search != null) {
-                txtCusId.setText(search.getId());
-                txtCusName.setText(search.getName());
-                txtCusAddress.setText(search.getAddress());
-                txtCusContact.setText(search.getContact());
-                txtTrainTime.setText(search.getTime());
-                txtCusPrice.setText(search.getPrice());
-                cmbCusFrom.setValue(search.getTrainFrom());
-                cmbCusTo.setValue(search.getTrainTo());
-                cmbCusTrain.setValue(search.getTrain());
-                cmbCusSeatNo.setValue(search.getSeatNo());
-                cmbCusClass.setValue(search.getTrainClass());
-                txtCusBookDate.setText(search.getDate());
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Empty Result..!").show();
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void cmbCusFromOnAction(ActionEvent actionEvent) {
-        comboTrain();
-    }
-
-    public void cmbCusToOnAction(ActionEvent actionEvent) {
-        comboTrain();
+        txtCusPrice.clear();
+        txtDate.clear();
     }
 }
+
+
