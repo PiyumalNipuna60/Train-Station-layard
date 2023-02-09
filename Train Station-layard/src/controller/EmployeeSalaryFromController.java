@@ -46,21 +46,6 @@ public class EmployeeSalaryFromController {
     }
 
     private void loadAllEmployee() {
-//        ResultSet result = CrudUtil.executeQuery("SELECT * FROM employee");
-//        ObservableList<Employee> obList = FXCollections.observableArrayList();
-//        while (result.next()) {
-//            obList.add(
-//                    new Employee(
-//                            result.getString("id"),
-//                            result.getString("name"),
-//                            result.getString("address"),
-//                            result.getString("age"),
-//                            result.getString("contact"),
-//                            result.getString("salary")
-//                    ));
-//        }
-//        tblEmployee.setItems(obList);
-
         try {
             ArrayList<EmployeeDTO> allEmployee = employeeBO.getAllEmployee();
             for (EmployeeDTO employee : allEmployee) {
